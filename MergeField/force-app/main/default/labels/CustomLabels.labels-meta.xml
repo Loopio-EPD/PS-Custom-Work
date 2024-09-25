@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>Rule_FieldReference_Error</fullName>
+        <categories>Exception</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Rule_FieldReference_Error</shortDescription>
+        <value>Error with Selected field Reference. Click Reset button and try different field!</value>
+    </labels>
+    <labels>
+        <fullName>Rule_Internal_Server_Error</fullName>
+        <categories>Exception</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Rule Internal Server Error</shortDescription>
+        <value>Internal Server Error</value>
+    </labels>
+    <labels>
+        <fullName>Rule_No_Sobject</fullName>
+        <categories>Exception</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Rule_No_Sobject</shortDescription>
+        <value>Error. No SObject Found!</value>
+    </labels>
+    <labels>
+        <fullName>Rule_Unknown_Error</fullName>
+        <categories>Exception</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Rule Unknown Error</shortDescription>
+        <value>Unknown Error!</value>
+    </labels>
+</CustomLabels>

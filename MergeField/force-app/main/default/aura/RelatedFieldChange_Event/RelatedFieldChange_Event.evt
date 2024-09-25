@@ -1,0 +1,9 @@
+<aura:event type="COMPONENT" description="Lightning event for notifying parent component for Field input change." >
+
+    <aura:attribute name="source" type="String" description="Component Source Id" />
+	<aura:attribute name="label" type="String" description="Field label of selected Related field" />
+	<aura:attribute name="value" type="String" description="Field Reference String of selected Related field" />
+    <aura:attribute name="type" type="String" description="Field type of selected field" />
+	<aura:attribute name="parentSObject" type="String" description="SObject name of selected field" />
+
+</aura:event>

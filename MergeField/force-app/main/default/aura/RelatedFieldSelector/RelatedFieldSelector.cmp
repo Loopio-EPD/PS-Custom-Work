@@ -1,0 +1,131 @@
+<aura:component controller="RulesController" description="Internal component. For use in Related field selection, customizable by providing attributes."  implements="flexipage:availableForAllPageTypes" access="global">
+	
+	<!-- Attributes for Field Selection customization -->
+	<aura:attribute name="name" type="String" default="" description="Name of the field selector to identify source element." />
+	<aura:attribute name="sObject" type="String" default="avnio__ProjectQuestion__c" required="true" description="SObject for showing related fields and sObjects" />
+	<aura:attribute name="sObjectLabel" type="String" default="" description="SObject Label of Master sObject" />
+	<aura:attribute name="origFieldReference" type="String" default="" description="Currently selected Field API Name" />
+	<aura:attribute name="fieldReferenceDepth" type="Integer" default="5" description="Field Reference selection Depth" />
+	<aura:attribute name="isRequiredFields" type="Boolean" default="true" description="True if wants required fields to be displayed" />
+	<aura:attribute name="isNonCreateableFields" type="Boolean" default="true" description="True if wants non-createable fields to be displayed" />
+	<aura:attribute name="isNonUpdateableFields" type="Boolean" default="true" description="True if wants non-updateable fields to be displayed" />
+	<aura:attribute name="objectFilters" type="String" default="" description="Comma-separated list of SObject Name for filtering fields for specific parent SObject" />
+	<aura:attribute name="typeFilters" type="String" default="" description="Comma-separated list of Apex Display Type for filtering Fields, empty if no filtering" />
+	<aura:attribute name="typeExceptions" type="String" default="" description="Comma-separated list of Apex Display Type for removing specified type of Fields, empty if no filtering" />
+	<aura:attribute name="isFromNewButton" type="Boolean" default="false" description="True if we are creating new record from list view" />
+
+	<!-- Internal attributes -->
+	<aura:attribute name="isLoading" type="Boolean" default="false" description="INTERNAL. True if anything is currently loading in Background" />
+	<aura:attribute name="val" type="String" default="" description="INTERNAL. Selected Field Value of Related Object" />
+	<aura:attribute name="errorText" type="String" default="" description="INTERNAL. Error text" />
+	<aura:attribute name="fieldsMap" type="Map" description="INTERNAL. Map of SObject fields" />
+	<aura:attribute name="fieldsList" type="List" description="INTERNAL. List of SObject fields" />
+	<aura:attribute name="entityList" type="List" description="INTERNAL. List for storing parent-child sobject and field Names hierarchy" />
+	<aura:attribute name="entityMapList" type="List" default="[]" description="INTERNAL. Map for storing related field List" />
+	<aura:attribute name="origFieldsMap" type="Object" default="{}" description="INTERNAL. Full Map of fields containing all field description" />
+	<aura:attribute name="finalFieldLabel" type="String" default="" description="INTERNAL. Final Field Label string created using Field References" />
+	<aura:attribute name="finalFieldReference" type="String" default="" description="INTERNAL. Final Field API Name string created using Field References" />
+	<aura:attribute name="finalFieldObject" type="String" default="" description="INTERNAL. Final Fields SObject Name" />
+	<aura:attribute name="finalFieldType" type="String" default="" description="INTERNAL. Final Field Type string created using Field References" />
+	
+	
+	<!-- Events and Handlers -->
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+	<aura:handler name="change" value="{!v.sObject}" action="{!c.doInit}" />
+	<aura:handler name="change" value="{!v.origFieldReference}" action="{!c.doInit}" />
+	<aura:registerEvent name="fieldSelectedEvent" type="c:RelatedFieldChange_Event" />
+	<aura:registerEvent name="relatedFieldSelectorEvent" type="c:RelatedFieldSelectorEvent" />
+
+
+	<aura:method name="initValues" action="{!c.insertField}" />
+
+
+	<!-- Layout & UI components -->
+	<lightning:overlayLibrary aura:id="overlayLibChild"/>
+
+	<div style="min-height: 300px;background-color:white!important;">
+		<lightning:layout multipleRows="true">
+
+			<!-- Display Fields for submitting -->
+			<lightning:layoutItem padding="around-small">
+				<lightning:layout>
+					
+					<lightning:layoutItem padding="around-small" class="slds-align_absolute-center">
+						<lightning:breadcrumbs>
+							<aura:iteration items="{!v.entityList}" var="fields" indexVar="itemIndex">
+								<lightning:breadcrumb name="{!itemIndex}" label="{!fields.label}" onclick="{!c.breadcrumbNavigate}" />
+							</aura:iteration>
+						</lightning:breadcrumbs>
+					</lightning:layoutItem>
+
+					<lightning:layoutItem padding="around-small" flexibility="auto">
+						<c:SearchablePicklist aura:Id="relatedField" options="{!v.fieldsList}" value="{!v.val}" onchange="{!c.fieldChanged}" placeholder="Select Field" showLabel="false" showSpinner="{!v.isLoading}" />
+					</lightning:layoutItem>
+
+					<lightning:layoutItem padding="around-small">
+						<lightning:buttonIconStateful iconName="utility:close" selected="{!true}" onclick="{!c.doInitEmpty}" alternativeText="Clear" />
+					</lightning:layoutItem>
+
+					<lightning:layoutItem padding="around-small">
+						<lightning:buttonIconStateful iconName="utility:refresh" selected="{!true}" onclick="{!c.doInit}" alternativeText="Reset" />
+					</lightning:layoutItem>
+
+				</lightning:layout>
+			</lightning:layoutItem>
+
+			<!-- Display Errors, if any -->
+			<aura:if isTrue="{!not(empty(v.errorText))}">
+				<lightning:layoutItem padding="around-small">
+					<div class="slds-text-heading_small slds-text-color_error">
+						{!v.errorText}
+					</div>
+				</lightning:layoutItem>
+			</aura:if>
+
+		</lightning:layout>
+
+		<!-- Display field Information, if field selected -->
+		<aura:if isTrue="{!not(empty(v.val))}">
+			<lightning:layoutItem size="8" padding="around-small" class="slds-align_absolute-center">
+				<div class="slds-box" style="background-color: #f3f2f2;">
+				
+					<lightning:tile label="{!v.finalFieldLabel}" class="slds-tile_board">
+
+						<aura:set attribute="media">
+							<lightning:layoutItem padding="around-small">
+								<lightning:icon iconName="standard:folder" size="large" />
+							</lightning:layoutItem>
+						</aura:set>
+
+						<dl class="slds-dl_horizontal">
+							<dt style="width: 35% !important; min-width: 80px !important;">
+								<p class="slds-truncate">API Name:</p>
+							</dt>
+							<dd style="width: 50% !important; min-width: 80px !important">
+								<p class="slds-truncate">{!v.val}</p>
+							</dd>
+							<dt style="width: 35% !important; min-width: 80px !important;">
+								<p class="slds-truncate">Object:</p>
+							</dt>
+							<dd style="width: 50% !important; min-width: 80px !important">
+								<p class="slds-truncate">{!v.finalFieldObject}</p>
+							</dd>
+							<dt style="width: 35% !important; min-width: 80px !important;">
+								<p class="slds-truncate">Type:</p>
+							</dt>
+							<dd style="width: 50% !important; min-width: 80px !important">
+								<p class="slds-truncate">{!v.finalFieldType}</p>
+							</dd>
+						</dl>
+						<br/>
+
+						<lightning:button variant="brand" label="Insert" onclick="{!c.insertField}" />
+					</lightning:tile>
+				
+				</div>
+			</lightning:layoutItem>
+		</aura:if>
+
+	</div>
+
+</aura:component>

@@ -1,0 +1,81 @@
+<aura:component description="Custom component for selecting Picklist value with Search functionality.">
+
+	<aura:attribute name="options" type="List" description="" />
+	<aura:attribute name="value" type="String" default="" description="" />
+	<aura:attribute name="label" type="String" default="" description="" />
+	<aura:attribute name="placeholder" type="String" default="Select value" description="" />
+	<aura:attribute name="showLabel" type="Boolean" default="true" description="" />
+	<aura:attribute name="disabled" type="Boolean" default="false" description="" />
+	<aura:attribute name="required" type="Boolean" default="false" description="" />
+	<aura:attribute name="messageWhenValueMissing" type="String" default="Complete this field." description="Message to display when field is Required and Value is missing" />
+	<aura:attribute name="minSearchLength" type="Integer" default="0" description="Minimum search string length to enter before showing search results" />
+	<aura:attribute name="showSpinner" type="Boolean" description="True if wants to show loading Spinner" />
+	<aura:attribute name="validity" type="Object" default="{valid:true}" description="Validity object with attribute Valid, which is True if Valid field is selected" />
+
+	<aura:attribute name="searchKeyword" type="String" default="" access="PRIVATE" description="Search string to get picklist results" />
+	<aura:attribute name="filteredOptions" type="List" default="[]" access="PRIVATE" description="" />
+	<aura:attribute name="selectedLabel" type="String" default="" access="PRIVATE" description="" />
+	<aura:attribute name="hasError" type="Boolean" access="PRIVATE" description="" />
+	<aura:attribute name="isSearchOpen" type="Boolean" access="PRIVATE" description="" />
+
+	<aura:method name="reportValidity" action="{!c.handleValidation}" />
+
+	<aura:registerEvent name="onchange" type="c:SearchablePicklist_SelectedEvent" />
+
+	<aura:handler name="SearchablePicklist_SelectedEvent" event="c:SearchablePicklist_SelectedEvent" action="{!c.handleComponentEvent}" />
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+	<aura:handler name="change" value="{!v.options}" action="{!c.doInit}" />
+	<aura:handler name="change" value="{!v.value}" action="{!c.doInit}" />
+
+
+	<!-- https://www.lightningdesignsystem.com/components/lookups/ -->
+	<div onmouseleave="{!c.onblur}" class="{!'slds-form-element slds-lookup ' + (v.isSearchOpen ? 'slds-is-open' : 'slds-is-close')}" data-select="single">
+
+		<aura:if isTrue="{!v.showLabel}" >
+			<aura:if isTrue="{!v.required}">
+				<abbr class="slds-required" title="required">*</abbr>
+			</aura:if>
+			<label class="slds-form-element__label"> {!v.label} </label>
+		</aura:if>
+
+		<!--This part is for display search bar for lookup-->
+		<div class="slds-form-element__control">
+
+			<aura:if isTrue="{!v.showSpinner}">
+				<lightning:spinner size="small" variant="brand" alternativeText="Loading" />
+			</aura:if>
+
+			<div class="slds-input-has-icon slds-input-has-icon--right">
+				<aura:if isTrue="{!not(v.disabled) &amp;&amp; not(empty(v.selectedLabel))}" >
+
+					<div class="slds-pill-container">
+						<lightning:pill class="pillSize" label="{!v.selectedLabel}" onremove="{!c.clear}" />
+					</div>
+					
+					<aura:set attribute="else">
+						<div class="{!v.hasError ? 'slds-has-error' : ''}">
+							<lightning:icon class="slds-input__icon" iconName="utility:search" size="x-small" alternativeText="search" />
+							<ui:inputText click="{!c.onfocus}" updateOn="keyup" keyup="{!c.search}" class="slds-lookup__search-input slds-input" value="{!v.searchKeyword}" placeholder="{!v.placeholder}" disabled="{!v.disabled}" required="{!v.required}" />
+						</div>
+					</aura:set>
+
+				</aura:if>
+			</div>
+
+			<!--This part is for Display typehead lookup result List-->
+			<ul style="min-height:40px; margin-top:0px !important; max-height: 250px; overflow-y: auto" class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid slds-lookup__menu slds" role="listbox">
+				<aura:iteration items="{!v.filteredOptions}" var="picklistItem" >
+					<c:SearchablePicklist_Result picklistItem="{!picklistItem}" />
+				</aura:iteration>
+			</ul>
+
+			<aura:if isTrue="{!v.hasError}">
+				<div class="slds-has-error">
+					<div class="slds-form-element__help">{!v.messageWhenValueMissing}</div>
+				</div>
+			</aura:if>
+		</div>
+
+	</div>
+
+</aura:component>

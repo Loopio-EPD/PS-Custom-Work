@@ -1,0 +1,65 @@
+<aura:component controller= "NewRelatedFieldMappingController" implements="lightning:actionOverride,flexipage:availableForRecordHome,force:hasRecordId" access="global">
+    <aura:attribute name="responseMergeRecord" type="Response_Merge_Field_Mapping__c" />
+    <aura:attribute name="showSpinner" type="Boolean" default="false"/>
+    <aura:attribute name="openmodel" type="Boolean" default="false"/>
+    <aura:attribute name="saveAndNew" type="Boolean" default="false"/>
+    <aura:attribute name="finalFieldReference" type="String" default="" access="public"/>
+    <aura:attribute name="keyWord" type="String" default="" access="public"/>
+    <aura:attribute name="staticvalue" type="String" default="" access="public"/>
+
+    <force:recordData aura:id="forceRecord"
+                      recordId="{!v.recordId}"
+                      targetFields="{!v.responseMergeRecord}"
+                      fields="Id,Name,Keyword__c,Merge_Field_API_Name__c,Value__c"
+                      mode="EDIT" />
+
+    <aura:handler name="relatedFieldSelectorEvent" event="c:RelatedFieldSelectorEvent" action="{!c.addMergeFieldApiName}"/>
+
+    <lightning:navigation aura:id="navigation"/>
+    
+    <div aura:id="editDialog" role="dialog" tabindex="-1" aria-labelledby="header43" class="slds-modal slds-fade-in-open">
+        <aura:if isTrue="{!v.showSpinner }">
+            <lightning:spinner size="medium" variant="brand" />
+        </aura:if>
+        <div class="slds-modal__container">
+            <div class="slds-modal__header">
+                <h2 class="slds-text-heading--medium">New Response Merge Field Mapping</h2>
+            </div>
+            <div class="slds-modal__content slds-p-around--medium slds-grid slds-wrap ">
+                <lightning:input aura:id="mergeField" name="mergeField" label="Merge Field API Name" value="{!v.finalFieldReference}" class="slds-size--2-of-3 slds-p-horizontal_x-small" disabled="true" placeholder="Please Choose Merge field"/>
+                <lightning:button variant="brand" label="Choose Merge Field" title="Primary action" onclick="{!c.openFieldSelectorComponenet}" class="slds-size--1-of-3 slds-p-horizontal_x-small custom-margin"/>
+                <lightning:input aura:id="keyword" name="keyword" label="Keyword" value="{!v.keyWord}" class="slds-size--1-of-2 slds-p-horizontal_x-small custom-margin" required="true"/>
+                <lightning:input aura:id="staticvalue" name="staticvalue" label="Value" value="{!v.staticvalue}" class="slds-size--1-of-2 slds-p-horizontal_x-small custom-margin"/>
+            </div>
+            <div class="slds-modal__footer">                
+                <lightning:button variant="neutral" label="Cancel" onclick="{!c.cancelCreation}"/>
+                <lightning:button variant="neutral" label="Save &amp; New" onclick="{!c.saveAndNewRecord}"/>
+                <lightning:button variant="brand" label="Save" onclick="{!c.saveRecord}" />
+            </div>
+        </div>
+    </div>
+
+    <aura:if isTrue="{!v.openmodel}">
+        <div>
+            <section role="dialog" tabindex="-1" aria-label="Meaningful description of the modal content" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <p class="modal-header" >Please choose the merge field</p>
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick="{!c.closeBtn}">
+                        <lightning:icon iconName="utility:close" size="small" variant="neutral"/>
+                        <span class="slds-assistive-text">Close</span>
+                        </button>
+                    </header>
+
+                    <div class="slds-modal__content slds-p-around_medium alignLeft" id="modal-content-id-1">
+                        <c:RelatedFieldSelector isFromNewButton = "true"/>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning:button label="Cancel" variant="brand" class="slds-m-top--medium" onclick="{!c.closeBtn}"/>
+                    </footer>
+                    </div>
+                </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+    </aura:if>
+</aura:component>

@@ -1,0 +1,6 @@
+<aura:event type="COMPONENT" description="Event for notifying parent component about selected picklist value changes.">
+
+    <aura:attribute name="value" type="String" description="Selected Picklist value" />
+    <aura:attribute name="label" type="String" description="Selected Picklist label" />
+
+</aura:event>

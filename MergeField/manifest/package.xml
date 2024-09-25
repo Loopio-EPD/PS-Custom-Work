@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>ProjectQuestionTrigger</members>
+        <name>ApexTrigger</name>
+    </types>
+    <types>
+        <members>Response_Merge_Field_Mapping__c</members>
+        <name>CustomObject</name>
+    </types>
+    <types>
+        <members>Response_Merge_Field_Mapping__c.Keyword__c</members>
+        <members>Response_Merge_Field_Mapping__c.Merge_Field_API_Name__c</members>
+        <members>Response_Merge_Field_Mapping__c.Value__c</members>
+        <name>CustomField</name>
+    </types>
+    <types>
+        <members>NewRelatedFieldMappingComponent</members>
+        <members>EditRelatedFieldMappingComponent</members>
+        <members>RelatedFieldSelector</members>
+        <members>SearchablePicklist</members>
+        <members>SearchablePicklist_Result</members>
+        <members>RelatedFieldSelectorEvent</members>
+        <members>RelatedFieldChange_Event</members>
+        <members>SearchablePicklist_SelectedEvent</members>
+        <name>AuraDefinitionBundle</name>
+    </types>
+    <types>
+        <members>NewRelatedFieldMappingController</members>
+        <members>RulesController</members>
+        <members>SObjectUtils</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>Rule_Internal_Server_Error</members>
+        <members>Rule_No_Sobject</members>
+        <members>Rule_Unknown_Error</members>
+        <members>Rule_FieldReference_Error</members>
+        <name>CustomLabel</name>
+    </types>
+    <types>
+        <members>Response_Merge_Field_Mapping_Record_Page</members>
+        <name>FlexiPage</name>
+    </types>
+    
+    <version>55.0</version>
+</Package>
