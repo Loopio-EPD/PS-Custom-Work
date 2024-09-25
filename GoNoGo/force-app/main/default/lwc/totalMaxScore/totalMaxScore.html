@@ -1,0 +1,14 @@
+<template>
+    <template if:true={showMessageString}>
+        <div class="slds-scoped-notification slds-media slds-media_center slds-scoped-notification_light marginclass" role="status">
+            <div class="slds-media__figure">
+              <span class="slds-icon_container slds-icon-utility-info" title="information">
+                <lightning-icon icon-name="utility:info" size="x-small" variant="inverse" class="info-icon-color"></lightning-icon>
+              </span>
+            </div>
+            <div class="slds-media__body">
+              <p>{messageString}<b>{actualScore}.</b></p>
+            </div>
+          </div>
+    </template>
+</template>

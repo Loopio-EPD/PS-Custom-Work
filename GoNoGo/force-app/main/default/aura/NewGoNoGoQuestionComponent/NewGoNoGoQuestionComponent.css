@@ -1,0 +1,31 @@
+.THIS .custom-margin {
+    margin-top: 20px;
+}
+.THIS .custom-margin-top {
+    margin-top: 25px;
+}
+.THIS .full-width {
+    width: 100%;
+}
+
+.THIS .left-margin {
+   margin-left: 8px;
+}
+.THIS .left-margin-new{
+    margin-left: 15px;
+}
+.THIS .left-margin-datatype {
+    margin-left: 15px;
+}
+.THIS .left-margin-firstrow {
+    margin-left: 4px;
+ }
+.THIS .required-class {
+    color: #ba0517;
+}
+.THIS .center-align {
+    text-align:center;
+}
+.THIS .padding-left-class {
+    padding-right: 25px;
+}

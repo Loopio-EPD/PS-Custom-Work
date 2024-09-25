@@ -1,0 +1,63 @@
+.modal-wrapper {
+    height: 490px;
+    margin-right: -30px;
+    margin-left: -30px;
+}
+.header-class {
+    margin-top: -20px;
+}
+.footer-class {
+    margin-bottom: -20px;
+}
+.all-component {
+    background-color: white;
+    position: relative;
+    height: 387px;
+    overflow: auto;
+    margin-left: 30px;
+}
+.all-component .custom-label {
+    font-size: 17px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.button-class{
+    margin-top : 0px;
+    height: 30px;
+    width: 100px;
+}
+.add-button-class{
+    margin-top : 20px;
+    height: 30px;
+    width: 200px;
+}
+.spinnerClass{
+    position: fixed;
+    z-index: 9002 !important;
+    height: 500px;
+}
+.icon-color{
+    --slds-c-icon-color-foreground-default: #000;
+    --slds-c-icon-color-foreground: #000;
+}
+.scorll-container{
+    max-height: 400px;
+    overflow: auto;
+}
+.slds-modal__container {
+    max-width: 80rem !important;
+    width: 80% !important;
+}
+.spinner-inner {
+    padding: 250px;
+}
+.input-class {
+    padding:10px;
+}
+.delete-button {
+    padding: 25px 15px 15px; 
+    Cursor:pointer;
+}
+.text-center {
+    text-align:center;
+}

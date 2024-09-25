@@ -1,0 +1,84 @@
+<apex:component access="global" controller="GonogodetailController">
+    <apex:attribute name="recipientUser" description="Project Object" type="SObject" access="global"/>
+    <apex:attribute name="recId" type="String" assignTo="{!recordId}" description="record Id for Project Question"/>
+
+
+    <!-- Project Detail -->
+    <table border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;padding:0" width="100%">
+    <tr style="background-color: #fff;">
+        <td style="border-collapse:collapse;padding:0 34px 10px">
+            <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;padding:0" width="100%">
+                <tbody>
+                    <p>Hello {!projectSO.actorName},</p>
+                    <p>{!projectSO.sentUserNameSentence}<b> </b></p>
+                    <p>The requestor will not be able to create a project in Loopio until you approve.<b> </b></p>
+                    <tr height="10">
+                        <td style="border-collapse:collapse">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td style="border-collapse:collapse">
+                            <table border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;padding:0" width="100%">
+                                <tbody>
+                                    
+                                    <tr style="border-bottom:1px solid #e0e5ee">
+
+                                        <td style="border-collapse:collapse;color:#2b2826;font-size:14px;line-height:24px;padding:8px 0;width:25%">
+                                            <b>Go/No-Go Number:</b>
+                                        </td>
+                                        <td style="width:25%">
+                                            <span style="color:#2b2826;text-decoration:none">{!projectSO.name}</span>
+                                        </td>
+                                        <td style="border-collapse:collapse;color:#2b2826;font-size:14px;line-height:24px;padding:8px 0;width:25%">
+                                            <b>Opportunity Name:</b>
+                                        </td>
+                                        <td style="width:25%">
+                                            <span style="color:#2b2826;text-decoration:none">{!projectSO.oppName}</span>
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr style="border-bottom:1px solid #e0e5ee">
+
+                                        <td style="border-collapse:collapse;color:#2b2826;font-size:14px;line-height:24px;padding:8px 0;width:25%">
+                                            <b>Go/No-Go Score:</b>
+                                        </td>
+                                        <td style="width:25%">
+                                            <span style="color:#2b2826;text-decoration:none">{!projectSO.score}</span>
+                                        </td>
+                                        <td style="border-collapse:collapse;color:#2b2826;font-size:14px;line-height:24px;padding:8px 0;width:25%">
+                                            <b>Submission Owner:</b>
+                                        </td>
+                                        <td style="width:25%">
+                                            <span style="color:#2b2826;text-decoration:none">{!projectSO.ownername}</span>
+                                        </td>
+
+                                       
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr height="10">
+                        <td style="border-collapse:collapse">&nbsp;</td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+
+    <!-- View Question Button -->
+    <tr style=" background-color: #fff;">
+        <td style="text-align:center;padding-bottom: 20px;">
+             <a href="{!LEFT($Api.Partner_Server_URL_140, FIND(".com/",$Api.Partner_Server_URL_140)+3)+'/'+projectSO['recid']}" target="_blank" style="border-radius: 3px; color: rgb(1, 118, 211); width:100px;max-width:100%;text-decoration:none;font-size: 90%;background: white
+;margin: 0 10px; display: inline-block; text-align: center; font-weight: 500; padding: 12px 20px 12px 20px;border: 1px solid rgb(1, 118, 211);">
+                 Go/No-Go Detail
+            </a>
+            <a href="{!LEFT($Api.Partner_Server_URL_140, FIND(".com/",$Api.Partner_Server_URL_140)+3)+'/p/process/ProcessInstanceWorkitemWizardStageManager?id='+projectSO.approvalrecid}" target="_blank" style="border-radius: 3px; color: white; width:110px;max-width:100%;text-decoration:none;font-size: 90%;background: rgb(1, 118, 211)
+;margin: 0 10px; display: inline-block; text-align: center; font-weight: 500; padding: 12px 20px 12px 20px;">
+            Approval Request
+            </a>
+        </td>
+
+    </tr>
+</table>
+
+</apex:component>

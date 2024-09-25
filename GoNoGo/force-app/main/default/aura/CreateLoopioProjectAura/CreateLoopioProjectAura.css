@@ -1,0 +1,39 @@
+.THIS .icon-color svg {
+    fill: black;
+}
+.THIS .spinner-class {
+    position: relative; 
+    background-color: white; 
+    padding-top: 125px; 
+    font-size: 20px; 
+    text-align:center;
+}
+.THIS .spinner-inner-class {
+    padding: 250px;
+}
+.THIS .text-message-class {
+    position: relative; 
+    background-color: white; 
+    padding-top: 225px; 
+    font-size: 20px; 
+    text-align:center;
+}
+.THIS .choose-project-type {
+    position: relative; 
+    background-color: white; 
+    padding-top: 50px; 
+    font-size: 20px; 
+    text-align:center;
+}
+.THIS .margin-class {
+    margin-top:20px;
+}
+.THIS .max-width-class {
+    width: max-content;
+    text-align: left;
+    margin-left: calc(100% - 50% - 150px);
+}
+.THIS .button-class {
+    margin-top: 20px;
+    font-size: 15px;
+}

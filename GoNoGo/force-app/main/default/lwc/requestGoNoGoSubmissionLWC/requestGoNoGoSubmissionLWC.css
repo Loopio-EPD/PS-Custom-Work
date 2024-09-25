@@ -1,0 +1,30 @@
+.all-component {
+    background-color: white;
+    position: relative;
+    height: 437px;
+}
+.modal-wrapper {
+    height: 540px;
+    margin-right: -30px;
+    margin-left: -30px;
+}
+.modal-wrapper-modal-wrapper-with-padding {
+    height: 540px;
+}
+.header-class {
+    margin-top: -20px;
+}
+.footer-class {
+    margin-bottom: -20px;
+}
+.center-elements{
+    margin: 0;
+    text-align:center;
+    padding-top: 125px;
+}
+.fontsize-class{
+    font-size: 20px;
+}
+.spinner-class{
+    padding: 200px;
+}

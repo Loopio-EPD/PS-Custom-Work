@@ -1,0 +1,41 @@
+{
+  "packageDirectories": [
+    {
+      "path": "force-app",
+      "default": true,
+      "package": "Loopio Go/No-Go",
+      "versionName": "Loopio 2024 1.14",
+      "versionNumber": "1.14.1.NEXT",
+      "postInstallScript": "PostInstallClass",
+      "versionDescription": "",
+      "ancestorVersion": "HIGHEST"
+    }
+  ],
+  "name": "Loopio Go/No-Go",
+  "namespace": "loopio_ext",
+  "sfdcLoginUrl": "https://login.salesforce.com",
+  "sourceApiVersion": "58.0",
+  "packageAliases": {
+    "Loopio Go/No-Go": "0HoOO00000000010AA",
+    "Loopio Go/No-Go@1.1.0-1": "04tOO00000007ZNYAY",
+    "Loopio Go/No-Go@1.2.0-1": "04tOO000000082PYAQ",
+    "Loopio Go/No-Go@1.3.0-1": "04tOO0000000841YAA",
+    "Loopio Go/No-Go@1.4.0-1": "04tOO0000000Ch7YAE",
+    "Loopio Go/No-Go@1.5.0-1": "04tOO0000000LvhYAE",
+    "Loopio Go/No-Go@1.6.0-1": "04tOO0000000NvtYAE",
+    "Loopio Go/No-Go@1.7.0-1": "04tOO0000000PhZYAU",
+    "Loopio Go/No-Go@1.7.0-2": "04tOO0000000Wj3YAE",
+    "Loopio Go/No-Go@1.7.0-3": "04tOO0000000WkfYAE",
+    "Loopio Go/No-Go@1.7.0-4": "04tOO0000000XTpYAM",
+    "Loopio Go/No-Go@1.8.0-1": "04tOO0000000p7NYAQ",
+    "Loopio Go/No-Go@1.8.0-2": "04tOO0000000p8zYAA",
+    "Loopio Go/No-Go@1.9.0-1": "04tOO0000001F3RYAU",
+    "Loopio Go/No-Go@1.10.0-1": "04tOO0000001NXFYA2",
+    "Loopio Go/No-Go@1.11.0-1": "04tOO0000001TzFYAU",
+    "Loopio Go/No-Go@1.12.0-1": "04tOO0000001oIvYAI",
+    "Loopio Go/No-Go@1.12.1-1": "04tOO0000001vHBYAY",
+    "Loopio Go/No-Go@1.13.0-1": "04tOO0000002CebYAE",
+    "Loopio Go/No-Go@1.14.0-1": "04tOO0000002doTYAQ",
+    "Loopio Go/No-Go@1.14.1-1": "04tOO0000002duvYAA"
+  }
+}

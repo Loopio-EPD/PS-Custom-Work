@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sum_of_Max_Scores__c</fullName>
+    <externalId>false</externalId>
+    <label>Sum of Max Scores</label>
+    <summarizedField>Go_No_Go_Section__c.Sum_of_Max_Scores__c</summarizedField>
+    <summaryForeignKey>Go_No_Go_Section__c.Go_No_Go_Configuration__c</summaryForeignKey>
+    <summaryOperation>sum</summaryOperation>
+    <trackTrending>false</trackTrending>
+    <type>Summary</type>
+</CustomField>

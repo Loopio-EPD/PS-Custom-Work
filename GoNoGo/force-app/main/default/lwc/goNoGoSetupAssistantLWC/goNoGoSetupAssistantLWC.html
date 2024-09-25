@@ -1,0 +1,299 @@
+<template>
+    <template if:true={showSpinner}>
+        <lightning-spinner alternative-text="Loading" size="medium" class="spinnerClass"></lightning-spinner>
+    </template>
+
+    <section class="slds-card">
+      <header class="slds-theme_shade slds-p-around_medium slds-m-bottom_small">
+        <div>
+          <div class="slds-grid slds-grid_align-spread slds-p-bottom_x-small">
+            <span class="desc-font">Complete all the steps below to finish setting up Loopio Go/No-Go.</span>
+          </div>
+        </div>
+      </header>
+      <ol class="slds-setup-assistant">
+        <li class="slds-setup-assistant__item">
+          <article class="slds-setup-assistant__step">
+            <div class="slds-summary-detail slds-is-open">
+                <div class="icon-class">
+                  <template if:true={expandfirstsection}>
+                    <lightning-icon onclick={onfirstsectiondropclick} class="icon-color" icon-name="utility:chevrondown" size="x-small" variant="inverse"></lightning-icon>
+                  </template>
+                  <template if:false={expandfirstsection}>
+                    <lightning-icon onclick={onfirstsectionsideclick} class="icon-color" icon-name="utility:chevronright" size="x-small" variant="inverse"></lightning-icon>
+                  </template>
+                </div>
+              <div class="slds-container_fluid">
+                <div class="slds-summary-detail__title">
+                  <div class="slds-setup-assistant__step-summary">
+                    <div class="slds-media">
+                      <div class="slds-media__body slds-m-top_x-small">
+                        <div class="slds-media">
+                          <div class="slds-setup-assistant__step-summary-content slds-media__body">
+                            <h3 class="slds-setup-assistant__step-summary-title slds-text-heading_small">
+                              1. Set Up Your Configuration
+                            </h3>
+                            <p class="desc-font">A configuration is a set of questions user will respond to to receive a Go/No-Go Score</p>
+                          </div>
+                          <div class="slds-grid slds-grid_align-end slds-size_1-of-4">
+                            <button onclick={handleOpenNewConfigModal} class="slds-button slds-button_outline-brand">Add New Configuration</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <template if:true={expandfirstsection}>
+                  <div class="slds-summary-detail__content" id="step-1-summary-action">
+                    <div class="slds-setup-assistant__step-detail">
+                      <div class="slds-progress slds-progress_vertical slds-progress_success">
+                        <ol class="slds-progress__list slds-progress__list-bordered">
+                          <li class="slds-progress__item slds-is-active">
+                            <div class="slds-progress__marker">
+                              <span class="slds-assistive-text">Active</span>
+                            </div>
+                            <div class="slds-progress__item_content slds-grid slds-grid_align-spread">
+                              <div class="slds-size_3-of-4 desc-font">Create a new configuration.</div>
+                              <div class="slds-grid slds-grid_align-end slds-size_1-of-4">
+                                <a class="desc-font" onclick={handleOpenGoNoGoConfigurations}>Go/No-Go Configurations</a>
+                              </div>
+                            </div>
+                          </li>
+                          <li class="slds-progress__item slds-is-active">
+                            <div class="slds-progress__marker">
+                              <span class="slds-assistive-text">Active</span>
+                            </div>
+                            <div class="slds-progress__item_content slds-grid slds-grid_align-spread">
+                              <div class="slds-size_3-of-4 desc-font">Add sections to your configuration.</div>
+                              <div class="slds-grid slds-grid_align-end slds-size_1-of-4">
+                                <a class="desc-font" onclick={handleOpenGoNoGoSections}>Go/No-Go Sections</a>
+                              </div>
+                            </div>
+                          </li>
+                          <li class="slds-progress__item slds-is-active">
+                            <div class="slds-progress__marker">
+                              <span class="slds-assistive-text">Active</span>
+                            </div>
+                            <div class="slds-progress__item_content slds-grid slds-grid_align-spread">
+                              <div class="slds-size_3-of-4 desc-font">Add questions to each section and give each question a maximum score.</div>
+                              <div class="slds-grid slds-grid_align-end slds-size_1-of-4">
+                                <a class="desc-font" onclick={handleOpenGoNoGoQuestions}>Go/No-Go Questions</a>
+                              </div>
+                            </div>
+                          </li>
+                          <li class="slds-progress__item slds-is-active">
+                            <div class="slds-progress__marker">
+                              <span class="slds-assistive-text">Active</span>
+                            </div>
+                            <div class="slds-progress__item_content slds-grid slds-grid_align-spread">
+                              <div class="slds-size_3-of-4 desc-font">Provide possible responses for each question and give each response a score.</div>
+                            </div>
+                          </li>
+                        </ol>
+                      </div>
+                    </div>
+                  </div>
+                </template>
+              </div>
+            </div>
+          </article>
+        </li>
+        <li class="slds-setup-assistant__item">
+          <article class="slds-setup-assistant__step">
+            <div class="slds-summary-detail">
+              <div class="slds-container_fluid margin-left-class">
+                <div class="slds-summary-detail__title">
+                  <div class="slds-setup-assistant__step-summary">
+                    <div class="slds-media">
+                      <div class="slds-media__body slds-m-top_x-small">
+                        <div class="slds-media">
+                          <div class="slds-setup-assistant__step-summary-content slds-media__body">
+                            <h3 class="slds-setup-assistant__step-summary-title slds-text-heading_small">
+                              2. Review Your Default Configuration
+                            </h3>
+                            <p class="desc-font">Determine which configuration will be used by all your organizational users.</p>
+                          </div>
+                          <div class="slds-grid slds-grid_align-end slds-size_1-of-4">
+                            <button onclick={handleOpenGoNoGoSettings} class="slds-button slds-button_outline-brand">Go/No-Go Settings</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </li>
+        <li class="slds-setup-assistant__item">
+          <article class="slds-setup-assistant__step">
+            <div class="slds-summary-detail slds-is-open">
+              <div class="icon-class">
+                <template if:true={expandthirdsection}>
+                  <lightning-icon onclick={onthirdsectiondropclick} class="icon-color" icon-name="utility:chevrondown" size="x-small" variant="inverse"></lightning-icon>
+                </template>
+                <template if:false={expandthirdsection}>
+                  <lightning-icon onclick={onthirdsectionsideclick} class="icon-color" icon-name="utility:chevronright" size="x-small" variant="inverse"></lightning-icon>
+                </template>
+              </div>
+              <div class="slds-container_fluid">
+                <div class="slds-summary-detail__title">
+                  <div class="slds-setup-assistant__step-summary">
+                    <div class="slds-media">
+                      <div class="slds-media__body slds-m-top_x-small">
+                        <div class="slds-media">
+                          <div class="slds-setup-assistant__step-summary-content slds-media__body">
+                            <h3 class="slds-setup-assistant__step-summary-title slds-text-heading_small">
+                              3. Add A Threshold Value (Optional)
+                            </h3>
+                            <p class="desc-font">This value will determine when a score will need to be approved before a Loopio Project can be greated.</p>
+                          </div>
+                          <div class="slds-grid slds-grid_align-end slds-size_1-of-4">
+                            <a class="desc-font" onclick={handleThresholdValueClick}>Configuring Go/No-Go Settings</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <template if:true={expandthirdsection}>
+                  <div class="slds-summary-detail__content" id="step-1-summary-action1">
+                    <div class="slds-setup-assistant__step-detail">
+                      <div class="slds-progress slds-progress_vertical slds-progress_success">
+                        <ol class="slds-progress__list slds-progress__list-bordered">
+                          <li class="slds-progress__item slds-is-active">
+                            <div class="slds-progress__marker">
+                              <span class="slds-assistive-text">Active</span>
+                            </div>
+                            <div class="slds-progress__item_content slds-grid slds-grid_align-spread">
+                              <div class="slds-size_3-of-4 desc-font">Determine your threshold.</div>
+                            </div>
+                          </li>
+                          <li class="slds-progress__item slds-is-active">
+                            <div class="slds-progress__marker">
+                              <span class="slds-assistive-text">Active</span>
+                            </div>
+                            <div class="slds-progress__item_content slds-grid slds-grid_align-spread">
+                              <div class="slds-size_3-of-4 desc-font">Build an approval process.</div>
+                              <div class="slds-grid slds-grid_align-end slds-size_1-of-4">
+                                <a class="desc-font" onclick={handleGoToApprovalProcessPage}>Approval Processes</a>
+                              </div>
+                            </div>
+                          </li>
+                        </ol>
+                        <div aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" role="progressbar">
+                          <span class="slds-assistive-text">Progress: 50%</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </template>
+              </div>
+            </div>
+          </article>
+        </li>
+        <li class="slds-setup-assistant__item">
+          <article class="slds-setup-assistant__step">
+            <div class="slds-summary-detail">
+              <div class="slds-container_fluid margin-left-class">
+                <div class="slds-summary-detail__title">
+                  <div class="slds-setup-assistant__step-summary">
+                    <div class="slds-media">
+                      <div class="slds-media__body slds-m-top_x-small">
+                        <div class="slds-media">
+                          <div class="slds-setup-assistant__step-summary-content slds-media__body">
+                            <h3 class="slds-setup-assistant__step-summary-title slds-text-heading_small">
+                              4. Review Go/No-Go Statuses
+                            </h3>
+                            <p class="desc-font">We have provided default statuses. You can edit these to suit your needs.</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </li>
+        <li class="slds-setup-assistant__item">
+          <article class="slds-setup-assistant__step">
+            <div class="slds-summary-detail">
+              <div class="slds-container_fluid margin-left-class">
+                <div class="slds-summary-detail__title">
+                  <div class="slds-setup-assistant__step-summary">
+                    <div class="slds-media">
+                      <div class="slds-media__body slds-m-top_x-small">
+                        <div class="slds-media">
+                          <div class="slds-setup-assistant__step-summary-content slds-media__body">
+                            <h3 class="slds-setup-assistant__step-summary-title slds-text-heading_small">
+                              5. Complete Your First Go/No-Go Submission!
+                            </h3>
+                          </div>
+                          <div class="slds-grid slds-grid_align-end slds-size_1-of-4">
+                            <button onclick={handleOpenOpportunities} class="slds-button slds-button_outline-brand">Opportunities</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </li>
+      </ol>
+    </section>
+    
+    <!-- new configuration modal start -->      
+   <template if:true={isShowModal}>
+
+      <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+      <div class="slds-modal__container">
+      <!-- modal header start -->
+      <header class="slds-modal__header">
+          <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideModalBox}>
+              <lightning-icon icon-name="utility:close"
+              alternative-text="close"
+              variant="inverse"
+              size="small" ></lightning-icon>
+              <span class="slds-assistive-text">Close</span>
+          </button>
+          <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">New Go/No-Go Configuration</h2>
+      </header>
+
+      <!-- modal body start -->
+      <div class="slds-modal__content slds-p-around_medium minheightformodal" id="modal-content-id-1">
+          <div class="slds-grid slds-wrap slds-gutters" >
+            <template if:true={gonogoconfigcreated}>
+              <div class="configdetailclass">
+                <div class="configdesctext">Go/No-Go Configuration "{configname}" created successfully.</div>
+                <button class="slds-button slds-button_neutral" onclick={openCofigRecord} title="Close">View Configuration</button>
+              </div>
+            </template>
+            <template if:false={gonogoconfigcreated}>
+                <div class="slds-col slds-large-size_6-of-12 slds-medium-size_6-of-12 slds-size_6-of-12" >
+                  <lightning-input max-length="80" required="true" type="text" placeholder="Enter Go/No-Go Configuration Name" name="Go/No-Go Configuration Name" label="Go/No-Go Configuration Name" value={configname} onchange={handleconfignamehange}></lightning-input>
+                </div>
+                <div class="slds-col slds-large-size_6-of-12 slds-medium-size_6-of-12 slds-size_6-of-12 margintop4" >
+                  <h2><span class="required-class">*</span>Owner</h2>
+                  <c-custom-lookup-component obj-name="User" search-placeholder="Search User..." icon-name="standard:user" onownervaluechange={handleownervaluechange}> </c-custom-lookup-component>   
+                </div>
+            </template>  
+          </div>
+      </div>
+
+      <!-- modal footer start-->
+      <footer class="slds-modal__footer">
+        <template if:false={gonogoconfigcreated}>
+          <button class="slds-button slds-button_neutral" onclick={hideModalBox}>Cancel</button>
+          <button class="slds-button slds-button_brand" onclick={saveNewConfig}>Save</button>
+        </template>
+      </footer>
+
+      </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open"></div>
+  </template>
+  <!-- new configuration modal end -->
+</template>

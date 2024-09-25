@@ -1,0 +1,7 @@
+.info-icon-color{
+    --slds-c-icon-color-foreground-default: #747474;
+    --slds-c-icon-color-foreground: #747474;
+}
+.marginclass{
+    margin: 10px;
+}

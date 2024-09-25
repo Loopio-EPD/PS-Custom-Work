@@ -1,0 +1,68 @@
+<messaging:emailTemplate subject="Reminder: A Go/No-Go Submission is required." recipientType="User" relatedToType="Go_No_Go_Configuration__c">
+<messaging:htmlEmailBody >
+        <div class="avnio_main-template-wrap" style="background-color:#f4f6f9;font-family:SalesforceSans-Regular,Helvetica,Arial,sans-serif;">
+            <table bgcolor="transparent"  background="https://avnio--c.documentforce.com/servlet/servlet.ImageServer?id=0153X000006i9uG&oid=00D3X000003drSO" border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse" width="100%">
+                <tbody>
+                    <tr>
+                        <td align="center" style="border-collapse:collapse;padding:0">
+                            <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;max-width:850px;width:850px;">
+                                <tbody>
+                                    <tr height="0">
+                                        <td style="border-collapse:collapse">&nbsp;</td>
+                                    </tr>
+
+                                    
+                                    <!-- Project Detail -->
+                                    <tr style="background-color: #fff;">
+                                        <td style="border-collapse:collapse;padding:0 34px 10px">
+                                            <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;padding:0" width="100%">
+                                                <tbody>
+                                                    <tr height="10">
+                                                        <td style="border-collapse:collapse">&nbsp;</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border-collapse:collapse">
+                                                            
+                                                        </td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+
+                                   <tr>
+                                        <td>
+                                             <c:gonogodetailforoppcomponent recId="{!relatedTo.Id}" recipientUser="{!recipient}" firstMessage="You have an outstatnding Go/No-Go Submission for the following opportunity."/>
+                                        </td>
+                                   </tr>
+
+                                    
+                                    <!-- Space Row -->
+                                    <tr height="10">
+                                        <td style="border-collapse:collapse">&nbsp;</td>
+                                    </tr>
+                                    <!-- Space Row Ends -->
+
+                                    <!-- Footer -->
+                                    <tr>
+                                        <td style="border-collapse:collapse">
+                                           
+                                        </td>
+                                    </tr>
+                                    <!-- Footer Ends -->
+
+                                    <!-- Space Row -->
+                                    <tr height="10">
+                                        <td style="border-collapse:collapse">&nbsp;</td>
+                                    </tr>
+                                    <!-- Space Row Ends -->
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </messaging:htmlEmailBody>
+</messaging:emailTemplate>

@@ -1,0 +1,100 @@
+<aura:component controller="GoNoGoController" implements="flexipage:availableForRecordHome,force:hasRecordId,lightning:actionOverride,force:lightningQuickAction,lightning:isUrlAddressable" access="global">
+	<aura:attribute name="showSpinner" type="Boolean" default="true"/>
+    <aura:attribute name="isApproved" type="Boolean" default="false"/>
+    <aura:attribute name="isLoopioPresent" type="Boolean" default="false"/>
+    <aura:attribute name="isAvnioPresent" type="Boolean" default="false"/>
+    <aura:attribute name="showProjectTypeSelection" type="Boolean" default="false"/>
+    <aura:attribute name="isError" type="Boolean" default="false"/>
+    <aura:attribute name="loopioCreateProjectUrl" type="String"/>
+    <aura:attribute name="opportunityId" type="String" access="public"/>
+    <aura:attribute name="accountId" type="String" access="public"/>
+    <aura:attribute name="isPending" type="Boolean" default="false"/>
+    <aura:attribute name="selectedRecordType" type="String"/>
+    <aura:attribute name="recordTypesForLFS" type="List"/>
+    <aura:attribute name="skipRecordTypeSelection" type="Boolean" default="false"/>
+    <aura:attribute name="showRecordTypeSelectionForLFS" type="Boolean" default="false"/>
+    <aura:attribute name="projecttypeoptions" type="List" default="[
+    {'label': 'Loopio', 'value': 'Loopio'},
+    {'label': 'Loopio for Salesforce', 'value': 'Loopio for Salesforce'}
+    ]"/>
+    <ltng:require styles="{!$Resource.GoNoGo_Css}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <div>
+        <aura:if isTrue="{!v.showSpinner}">
+            <div class="spinner-class">
+                <lightning:spinner id="spinner" class="spinner-inner-class" alternative-text="Loading" size="medium"></lightning:spinner>
+            </div>
+            <aura:set attribute="else">
+                <aura:if isTrue="{!v.isPending}">
+                    <div class="text-message-class">
+                        You cannot create Loopio Project for this Go/No-Go Submission because it is in pending status.
+                    </div>
+                    <aura:set attribute="else">
+                        <aura:if isTrue="{!v.isError}">
+                            <div class="text-message-class">
+                                Something went wrong while creating loopio project. Please try again later.
+                            </div>
+                            <aura:set attribute="else">
+                                <aura:if isTrue="{!v.isApproved}">
+                                    <aura:if isTrue="{!v.showRecordTypeSelectionForLFS}">
+                                        <div class="choose-project-type max-width-class">
+                                            <h1>Choose Record Type</h1>
+                                            <lightning:radioGroup
+                                            aura:id="recordTypeGroup"
+                                            value="{!v.selectedRecordType}"
+                                            options="{! v.recordTypesForLFS }"
+                                            onchange="{! c.handleRecordTypeChange }"/>
+
+                                            <div class="button-class">
+                                                <lightning:button variant="brand" label="Continue" onclick="{!c.continueToRecTypeSelection}"/>
+                                            </div>
+                                        </div>
+                                        <aura:set attribute="else">
+                                            <aura:if isTrue="{!v.showProjectTypeSelection}">
+                                                <div class="choose-project-type max-width-class">
+                                                    <h1>Choose Project Type</h1>
+                                                    <lightning:radioGroup
+                                                        aura:id="mygroup"
+                                                        value="Loopio"
+                                                        options="{! v.projecttypeoptions }"
+                                                        onchange="{! c.handleProjectTypeChange }"/>
+        
+                                                        <div class="button-class">
+                                                            <lightning:button variant="brand" label="Create" onclick="{!c.continueToCreateProject}"/>
+                                                        </div>
+                                                </div>
+                                                <aura:set attribute="else">
+                                                    <aura:if isTrue="{!and(!v.isLoopioPresent,!v.isAvnioPresent)}">
+                                                        <div class="text-message-class">
+                                                            You cannot create Loopio Project for this Go/No-Go Submission.
+                                                        </div>
+                                                        <aura:set attribute="else">
+                                                            <aura:if isTrue="{!v.isLoopioPresent}">
+                                                                <iframe src="{!v.loopioCreateProjectUrl}" height="460px" width="100%"></iframe>
+                                                            </aura:if>
+                                                        </aura:set>
+                                                    </aura:if>
+                                                </aura:set>
+                                            </aura:if>
+                                        </aura:set>
+                                    </aura:if>
+                                    <aura:set attribute="else">
+                                        <div class="text-message-class">
+                                            <div class="icon-color">
+                                                <lightning:icon iconName="utility:lock" size="small" variant="inverse" title = "Access Denied"></lightning:icon>
+                                            </div>
+                                            <div class="margin-class">
+                                                You cannot create the loopio project for this Go/No-Go becuase it is not yet approved or it has been rejected.
+                                            </div>
+                                        </div>
+                                    </aura:set>
+                                </aura:if>
+                            </aura:set>
+                        </aura:if>
+                    </aura:set>
+                </aura:if>
+            </aura:set>
+        </aura:if>
+    </div>
+</aura:component>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <defaultLandingTab>standard-home</defaultLandingTab>
+    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+    <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
+    <label>Loopio Go/No-Go</label>
+    <logo>Loopio_Ext/Big_Loopio_Logo.png</logo>
+    <tabs>standard-Opportunity</tabs>
+    <tabs>Go_No_Go_Configuration__c</tabs>
+    <tabs>Go_No_Go_Section__c</tabs>
+    <tabs>Go_No_Go_Question_Bank__c</tabs>
+    <tabs>Go_No_Go_Answer__c</tabs>
+    <tabs>standard-report</tabs>
+    <tabs>Go_No_Go_Settings</tabs>
+    <tabs>Go_No_Go_Setup_Assistant</tabs>
+    <tabs>standard-Dashboard</tabs>
+</CustomApplication>

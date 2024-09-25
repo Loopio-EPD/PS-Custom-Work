@@ -1,0 +1,4 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,lightning:actionOverride,force:lightningQuickActionWithoutHeader,lightning:isUrlAddressable" access="global">
+	<ltng:require styles="{!$Resource.GoNoGo_Css}"/>
+    <c:createGoNoGoScores recordId="{!v.recordId}" onclose="{!c.closeQA}" onrefresh="{!c.refreshQA}"/>
+</aura:component>

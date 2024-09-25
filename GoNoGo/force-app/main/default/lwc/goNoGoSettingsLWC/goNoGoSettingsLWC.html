@@ -1,0 +1,575 @@
+<template>
+
+    <template if:true={showSpinner}>
+        <lightning-spinner alternative-text="Loading" size="medium" class="spinnerClass"></lightning-spinner>
+    </template>
+
+    <div class="alldiv">
+        <div>
+            <lightning-card hide-header>
+                <div class="all-component slds-grid">
+                    <div class="settings-icon">
+                        <lightning-icon class="icon-class" icon-name="standard:settings" size="medium" variant="inverse"></lightning-icon>
+                    </div>
+                    <div class="slds-col font-class">
+                        <span class="font-class-setting"><h2>Go/No-Go Organization Settings</h2></span>
+                        <span><h2>Select the desired configuration for your organization, adjust your threshold for approval and customize Go/No-Go statuses.</h2></span>    
+                    </div>
+                </div>
+            </lightning-card>
+        </div>
+
+        <div class="marginlass1">
+            <lightning-card hide-header>
+                <div class="all-component slds-grid">
+                    <template if:false={editDefaultConfigName}>
+                        <div class="slds-col font-class">
+                            <span class="font-class-section-head"><h2>Default Configuration</h2></span>
+                            <span><h2 class="marginlass1">Your Go/No-Go Configuration is the group of questions that make up your Go/No-Go questionnaire. To add or edit your configurations, go to the Go/No-Go Configurations tab.</h2></span>    
+                            <template if:true={isLinkedConfigPresent}>
+                                <span><h2 class="marginlass1"><span class="make-bold">Default Configuration Name:</span> {linkedConfigName} <lightning-icon icon-name="utility:link" size="x-small" variant="inverse" class="link-icon-color-without-cursor"></lightning-icon></h2></span>
+                            </template>
+                            <template if:false={isLinkedConfigPresent}>
+                                <span><h2 class="marginlass1"><span class="make-bold">Default Configuration Name:</span> {defaultConfigName}</h2></span>
+                            </template>
+                            <template if:true={hasadminaccess}>
+                                <div class="redirectclass" onclick={handleManageCustomSettingsPage}>
+                                    Manage Configurations For An Individual User or Profile
+                                </div>
+                            </template>
+                        </div>
+                        <div class="slds-col right-col">
+                            <button class="slds-button slds-button_outline-brand" variant="brand-outline" onclick={handelEditDefaultConfigName} title="Edit">Edit</button>
+                        </div>
+                    </template>
+
+                    <template if:true={editDefaultConfigName}>
+                        <div class="slds-col font-class">
+                            <span class="font-class-section-head"><h2>Default Configuration</h2></span>
+                            <span><h2 class="marginlass1">Your Go/No-Go Configuration is the group of questions that make up your Go/No-Go questionnaire. To add or edit your configurations, go to the Go/No-Go Configurations tab.</h2></span>    
+                            <template if:true={isLinkedConfigPresent}>
+                                <div class="marginlass1 linked-config-text">
+                                    Default Configuration Name
+                                </div>
+                                <div class="marginleft20 marginlass1">
+                                    {linkedConfigName} <lightning-icon icon-name="utility:link" size="x-small" variant="inverse" class="link-icon-color-without-cursor"></lightning-icon>
+                                    <span class="remove-linked-config" onclick={handleRemoveLinkedConfig}>
+                                        Remove Linked Configuration
+                                    </span>
+                                </div>
+                            </template>
+                            <template if:false={isLinkedConfigPresent}>
+                                <div class="linked-combo">
+                                    <div class="combo-class marginlass1">
+                                        <lightning-combobox label="Default Configuration Name" placeholder="Select Default Configuration" value={defaultConfigName} name="dropdown" options={availableConfigurationsList} onchange={handleConfigChange}></lightning-combobox>
+                                    </div>
+                                    <span class="redirectclass" onclick={handleCreateLinkedConfig}>
+                                        Create a Linked Configuration 
+                                        <lightning-icon icon-name="utility:link" size="x-small" variant="inverse" class="link-icon-color"></lightning-icon>
+                                    </span>
+                                </div>
+                            </template>
+                        </div>
+                        <div class="slds-col right-col">
+                            <button class="slds-button" variant="base" onclick={cancelEditDefaultConfigName} title="Cancel">Cancel</button>
+                            <button class="slds-button slds-button_brand marginleft20" variant="brand" onclick={saveConfigChange}>Save</button>
+                        </div>
+                    </template>
+                </div>
+            </lightning-card>
+        </div>
+
+        <div class="marginlass1">
+            <lightning-card hide-header>
+                <div class="all-component slds-grid">
+                    <template if:false={editThreshold}>
+                        <div class="slds-col font-class">
+                            <span class="font-class-section-head"><h2>Set Threshold</h2></span>
+                            <span><h2 class="marginlass1">Your Go/No-Go Threshold is the value that determines whether or not a Loopio project may be created. If a Go/No-Go score is below the threshold, you can create an approval process to allow a Loopio project to be created.</h2></span>    
+                            <span><h2 class="marginlass1"><span class="make-bold">Threshold:</span> {thresholdvalue}</h2></span>
+                            <lightning-input class="marginlass1" type="checkbox" label="Auto Submit for Approval" name="autoSubmit" checked={autoSubmitForApproval} disabled></lightning-input>
+                            <template if:true={hasadminaccess}>
+                                <div class="redirectclass" onclick={handleGoToApprovalProcessPage}>
+                                    Go/No-Go Approval Process
+                                </div>
+                            </template>
+                        </div>
+                        <div class="slds-col right-col">
+                            <button class="slds-button slds-button_outline-brand" variant="brand-outline" onclick={handelEditThreshold} title="Edit">Edit</button>
+                        </div>
+                    </template>
+                    <template if:true={editThreshold}>
+                        <div class="slds-col font-class">
+                            <span class="font-class-section-head"><h2>Set Threshold</h2></span>
+                            <span><h2 class="marginlass1">Your Go/No-Go Threshold is the value that determines whether or not a Loopio project may be created. If a Go/No-Go score is below the threshold, you can create an approval process to allow a Loopio project to be created.</h2></span>    
+                            <span><h2>
+                                <lightning-input class="combo-class marginlass1" type='number' name="Threshold" label="Threshold" placeholder="Enter threshold value" value={thresholdvalue} onchange={handleThresholdChange}></lightning-input>
+                            </h2></span>
+                            <lightning-input type="checkbox" label="Auto Submit for Approval" name="autoSubmit" checked={autoSubmitForApproval} onchange={handleAutoSubmitForApprovalChange}></lightning-input>
+                        </div>
+                        <div class="slds-col right-col">
+                            <button class="slds-button" variant="base" onclick={cancelEditThreshold} title="Cancel">Cancel</button>
+                            <button class="slds-button slds-button_brand marginleft20" variant="brand" onclick={saveThresholdChange}>Save</button>
+                        </div>
+                    </template>
+                    
+                </div>
+            </lightning-card>
+        </div>
+
+        <div class="marginlass1">
+            <lightning-card hide-header>
+                <div class="all-component slds-grid">
+                    <template if:false={editStatuses}>
+                        <div class="slds-col font-class">
+                            <span class="font-class-section-head"><h2>Go/No-Go Statuses</h2></span>
+                            <span><h2 class="marginlass1">You can set different Go/No-Go Statuses that your Go/No-Go Score will fall into depending on its values. You may use statuses to denote that a certain value range is good compared to others.</h2></span>
+                        </div>
+                        <div class="slds-col right-col">
+                            <button class="slds-button slds-button_outline-brand" variant="brand-outline" onclick={handelEditStatuses} title="Edit">Edit</button>
+                        </div>
+                    </template>
+                    <template if:true={editStatuses}>
+                        <div class="slds-col font-class">
+                            <span class="font-class-section-head"><h2>Go/No-Go Statuses</h2></span>
+                            <span><h2 class="marginlass1">You can set different Go/No-Go Statuses that your Go/No-Go Score will fall into depending on its values. You may use statuses to denote that a certain value range is good compared to others.</h2></span>
+                        </div>
+                        <div class="slds-col right-col">
+                            <button class="slds-button" variant="base" onclick={cancelEditStatuses} title="Cancel">Cancel</button>
+                            <button class="slds-button slds-button_brand marginleft20" variant="brand" onclick={saveStatusesChange}>Save</button>
+                        </div>
+                    </template>
+                </div>
+                <div>
+                    <template if:true={showStatusTable}>
+                        <template if:false={editStatuses}>
+                            <lightning-layout horizontal-align="left" multiple-rowsclass="slds-grid_align-end container">
+                                <lightning-layout-item size="12" class="row">
+                                    <div class="slds-theme--default">
+                                        <div class="header-class">
+                                            <div class="slds-scrollable_y tableFixHead" >
+                                                <table class="slds-table slds-table_bordered">
+                                                    <thead>
+                                                        <tr class="trclass" >
+                                                            <th scope="col" class="width70">
+                                                                <div title="Status Label">Status Label</div>
+                                                            </th>
+                                                            <th scope="col" class="width15">
+                                                                <div title="Min Range">Min Range</div>
+                                                            </th>
+                                                            <th scope="col" class="width15">
+                                                                <div title="Max Range">Max Range</div>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <template for:each={statusList} for:item="ptr">
+                                                            <tr class="slds-hint-parent" key={ptr.statusid}>
+                                                                <td class="tdclass">
+                                                                    <div class="slds-cell-wrap">
+                                                                        <lightning-formatted-rich-text id={ptr.statusid} class="topText" type="text" value={ptr.label} disabled="true"></lightning-formatted-rich-text>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="tdclass">
+                                                                    <div class="slds-cell-wrap">
+                                                                        <lightning-formatted-rich-text id={ptr.statusid} class="topText" type="text" value={ptr.minrange} disabled="true"></lightning-formatted-rich-text>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="tdclass">
+                                                                    <div class="slds-cell-wrap">
+                                                                        <lightning-formatted-rich-text id={ptr.statusid} class="topText" type="text" value={ptr.maxrange} disabled="true"></lightning-formatted-rich-text>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </template>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                        </template>
+                        <template if:true={editStatuses}>
+                            <lightning-layout horizontal-align="left" multiple-rowsclass="slds-grid_align-end container">
+                                <lightning-layout-item size="12" class="row">
+                                    <div class="slds-theme--default">
+                                        <div class="innerheader">
+                                            <div class="tableFixHead" >
+                                                <table class="slds-table slds-table_bordered">
+                                                    <thead>
+                                                        <tr class="trclass">
+                                                            <th scope="col" class="width50">
+                                                                <div title="Status Label">Status Label</div>
+                                                            </th>
+                                                            <th scope="col" class="width15">
+                                                                <div title="Min Range">Min Range</div>
+                                                            </th>
+                                                            <th scope="col" class="width15">
+                                                                <div title="Max Range">Max Range</div>
+                                                            </th>
+                                                            <th scope="col" class="width15">
+                                                                <div title="Static Resource Name">Static Resource Name 
+                                                                    <span class="info-style">
+                                                                        <lightning-icon icon-name="utility:info_alt" size="x-small" variant="inverse" class="info-icon-color"></lightning-icon>
+                                                                        <div class="slds-popover slds-popover_tooltip slds-nubbin_bottom" role="tooltip">
+                                                                          <div class="slds-popover__body">We use static resources to add a visual indicator to your Go/No-Go Status.<div><a title="How to add a static resource" href="https://developer.salesforce.com/docs/atlas.en-us.pages.meta/pages/pages_resources_create.htm" target="_blank">How to add a static resource</a></div></div>
+                                                                        </div>
+                                                                    </span>
+                                                                </div>
+                                                            </th>
+                                                            <th scope="col" class="width5">
+                                                                <div title=""></div>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <template for:each={statusList} for:item="ptr">
+                                                            <tr class="slds-hint-parent" key={ptr.statusid}>
+                                                                <td class="tdclass">
+                                                                    <div class="slds-cell-wrap">
+                                                                        <lightning-formatted-rich-text id={ptr.statusid} class="topText" type="text" value={ptr.label} disabled="true"></lightning-formatted-rich-text>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="tdclass">
+                                                                    <div class="slds-cell-wrap">
+                                                                        <lightning-formatted-rich-text id={ptr.statusid} class="topText" type="text" value={ptr.minrange} disabled="true"></lightning-formatted-rich-text>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="tdclass">
+                                                                    <div class="slds-cell-wrap">
+                                                                        <lightning-formatted-rich-text id={ptr.statusid} class="topText" type="text" value={ptr.maxrange} disabled="true"></lightning-formatted-rich-text>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="tdclass">
+                                                                    <div class="slds-cell-wrap">
+                                                                        <lightning-formatted-rich-text id={ptr.statusid} class="topText" type="text" value={ptr.staticresourcename} disabled="true"></lightning-formatted-rich-text>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="tdclass">
+                                                                    <div class="slds-cell-wrap">
+                                                                        <lightning-button-icon id={ptr.statusid} icon-name="utility:edit" size="x-small" variant="inverse" class="info-icon-color" onclick={handleeditstatusclick}></lightning-button-icon>
+                                                                        <lightning-button-icon id={ptr.statusid} icon-name="utility:delete" size="x-small" variant="inverse" class="info-icon-color marginleft20" onclick={handledeletestatusclick}></lightning-button-icon>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </template>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                            <div class="addnewcbutton" onclick={handelAddNewButtonClick}>
+                                <span class="exfontsize">+</span> Add New
+                            </div>
+                        </template>
+                    </template>
+                    <template if:false={showStatusTable}>
+                        <template if:false={editStatuses}>
+                            <lightning-layout horizontal-align="left" multiple-rowsclass="slds-grid_align-end container">
+                                <lightning-layout-item size="12" class="row">
+                                    <div class="slds-theme--default">
+                                        <div class="header-class">
+                                            <div class="slds-scrollable_y tableFixHead" >
+                                                <table class="slds-table slds-table_bordered">
+                                                    <thead>
+                                                        <tr class="trclass">
+                                                            <th scope="col" class="width70">
+                                                                <div title="Status Label">Status Label</div>
+                                                            </th>
+                                                            <th scope="col" class="width15">
+                                                                <div title="Min Range">Min Range</div>
+                                                            </th>
+                                                            <th scope="col" class="width15">
+                                                                <div title="Max Range">Max Range</div>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr class="slds-hint-parent">
+                                                            <td class="tdclass">
+                                                                <div class="slds-cell-wrap">
+                                                                    <lightning-formatted-rich-text type="text" value="No Statuses" disabled="true"></lightning-formatted-rich-text>
+                                                                </div>
+                                                            </td>
+                                                            <td class="tdclass">
+                                                                <div class="slds-cell-wrap">
+                                                                    <lightning-formatted-rich-text type="text" value="" disabled="true"></lightning-formatted-rich-text>
+                                                                </div>
+                                                            </td>
+                                                            <td class="tdclass">
+                                                                <div class="slds-cell-wrap">
+                                                                    <lightning-formatted-rich-text type="text" value="" disabled="true"></lightning-formatted-rich-text>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                        </template>
+                        <template if:true={editStatuses}>
+                            <lightning-layout horizontal-align="left" multiple-rowsclass="slds-grid_align-end container">
+                                <lightning-layout-item size="12" class="row">
+                                    <div class="slds-theme--default">
+                                        <div class="innerheader">
+                                            <div class="tableFixHead" >
+                                                <table class="slds-table slds-table_bordered">
+                                                    <thead>
+                                                        <tr class="trclass" >
+                                                            <th scope="col" class="width50">
+                                                                <div title="Status Label">Status Label</div>
+                                                            </th>
+                                                            <th scope="col" class="width15">
+                                                                <div title="Min Range">Min Range</div>
+                                                            </th>
+                                                            <th scope="col" class="width15">
+                                                                <div title="Max Range">Max Range</div>
+                                                            </th>
+                                                            <th scope="col" class="width15">
+                                                                <div title="Static Resource Name">Static Resource Name 
+                                                                    <span class="info-style">
+                                                                        <lightning-icon icon-name="utility:info_alt" size="x-small" variant="inverse" class="info-icon-color"></lightning-icon>
+                                                                        <div class="slds-popover slds-popover_tooltip slds-nubbin_bottom" role="tooltip">
+                                                                          <div class="slds-popover__body">We use static resources to add a visual indicator to your Go/No-Go Status.<div><a title="How to add a static resource" href="https://developer.salesforce.com/docs/atlas.en-us.pages.meta/pages/pages_resources_create.htm" target="_blank">How to add a static resource</a></div></div>
+                                                                        </div>
+                                                                    </span>
+                                                                </div>
+                                                            </th>
+                                                            <th scope="col" class="width5">
+                                                                <div title=""></div>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr class="slds-hint-parent">
+                                                            <td class="tdclass">
+                                                                <div class="slds-cell-wrap">
+                                                                    <lightning-formatted-rich-text type="text" value="No Statuses" disabled="true"></lightning-formatted-rich-text>
+                                                                </div>
+                                                            </td>
+                                                            <td class="tdclass">
+                                                                <div class="slds-cell-wrap">
+                                                                    <lightning-formatted-rich-text type="text" value="" disabled="true"></lightning-formatted-rich-text>
+                                                                </div>
+                                                            </td>
+                                                            <td class="tdclass">
+                                                                <div class="slds-cell-wrap">
+                                                                    <lightning-formatted-rich-text type="text" value="" disabled="true"></lightning-formatted-rich-text>
+                                                                </div>
+                                                            </td>
+                                                            <td class="tdclass">
+                                                                <div class="slds-cell-wrap">
+                                                                    <lightning-formatted-rich-text type="text" value="" disabled="true"></lightning-formatted-rich-text>
+                                                                </div>
+                                                            </td>
+                                                            <td class="tdclass">
+                                                                <div class="slds-cell-wrap">
+                                                                    <lightning-formatted-rich-text type="text" value="" disabled="true"></lightning-formatted-rich-text>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                            <div class="addnewcbutton" onclick={handelAddNewButtonClick}>
+                                <span class="exfontsize">+</span> Add New
+                            </div>
+                        </template>
+                    </template>
+                </div>
+            </lightning-card>
+        </div>
+
+        <div class="marginlass1">
+            <lightning-card hide-header>
+                <div class="all-component slds-grid">
+                    <template if:false={editAsigneeNotification}>
+                        <div class="slds-col font-class">
+                            <span class="font-class-section-head"><h2>Assignee Notification</h2></span>
+                            <span><h2 class="marginlass1">You can choose to send a notification to the configuration owner when an opportunity reaches your desired stage.</h2></span>    
+                            <span class="make-bold"><h2 class="marginlass1">Set Notification</h2></span>
+                            <span><h2 class="marginlass1 displayflex"><span>Send the Configuration Owner a notification when an opportunity is ready for Go/No-Go submission</span> <lightning-input type="toggle" checked={asigneeNotification} disabled></lightning-input></h2></span>
+                            
+                            <template if:true={asigneeNotification}>
+                                <div class="combo-class-top">
+                                    <lightning-combobox disabled label="Select when the notification is sent:" value={selectedOppStatus} name="dropdown" options={opportunityStatuses}></lightning-combobox>
+                                </div>
+                            </template>
+                            <span class="make-bold"><h2>Set Reminder</h2></span>
+                            <span><h2 class="marginlass1 displayflex"><span>Set a reminder notification if the submission is not completed</span> <lightning-input type="toggle" checked={reminderNotification} disabled></lightning-input></h2></span>
+                            <div class="combo-class">
+                                <lightning-combobox disabled label="Send reminder email after" value={reminderNotificationDays} name="dropdown" options={reminderNotificationDaysOptions}></lightning-combobox>
+                            </div>
+                        </div>
+                        <div class="slds-col right-col">
+                            <button class="slds-button slds-button_outline-brand" variant="brand-outline" onclick={handelEditAsigneeNotification} title="Edit">Edit</button>
+                        </div>
+                    </template>
+                    <template if:true={editAsigneeNotification}>
+                        <div class="slds-col font-class">
+                            <span class="font-class-section-head"><h2>Assignee Notification</h2></span>
+                            <span><h2 class="marginlass1">You can choose to send a notification to the configuration owner when an opportunity reaches your desired stage.</h2></span>    
+                            <span class="make-bold"><h2 class="marginlass1">Set Notification</h2></span>
+                            <span><h2 class="marginlass1 displayflex"><span>Send the Configuration Owner a notification when an opportunity is ready for Go/No-Go submission</span> <lightning-input type="toggle" checked={asigneeNotification} onchange={handleAsigneeNotificationChange}></lightning-input></h2></span>
+                            
+                            <div class="combo-class-top">
+                                <lightning-combobox label="Select when the notification is sent:" value={selectedOppStatus} name="dropdown" options={opportunityStatuses} onchange={handleOppStageChange}></lightning-combobox>
+                            </div>
+                            <span class="make-bold"><h2>Set Reminder</h2></span>
+                            <span><h2 class="marginlass1 displayflex"><span>Set a reminder notification if the submission is not completed</span> <lightning-input type="toggle" checked={reminderNotification} onchange={handleReminderNotificationChange} disabled={disableReminderNotification}></lightning-input></h2></span>
+                            <div class="combo-class">
+                                <lightning-combobox label="Send reminder email after" disabled={disableReminderDays} value={reminderNotificationDays} name="dropdown" options={reminderNotificationDaysOptions} onchange={handleReminderDaysChange}></lightning-combobox>
+                            </div>
+                        </div>
+                        <div class="slds-col right-col">
+                            <button class="slds-button" variant="base" onclick={cancelEditAsigneeNotification} title="Cancel">Cancel</button>
+                            <button class="slds-button slds-button_brand marginleft20" variant="brand" onclick={saveAsigneeNotificationChange}>Save</button>
+                        </div>
+                    </template>
+                    
+                </div>
+            </lightning-card>
+        </div>
+    </div>
+
+    <!-- add/edit status modal start -->      
+   <template if:true={isShowModal}>
+
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+        <!-- modal header start -->
+        <header class="slds-modal__header">
+            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideModalBox}>
+                <lightning-icon icon-name="utility:close"
+                alternative-text="close"
+                variant="inverse"
+                size="small" ></lightning-icon>
+                <span class="slds-assistive-text">Close</span>
+            </button>
+            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{modalHeader}</h2>
+        </header>
+
+        <!-- modal body start -->
+        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+            <div class="slds-grid slds-wrap" >
+                <div class="slds-col slds-large-size_6-of-12 slds-medium-size_6-of-12 slds-size_6-of-12 input-class">
+                    <div class="padding10">
+                        <lightning-input type="text" placeholder="Enter Status Label" name="Status Label" label="Status Label" value={modalstatuslabel} onchange={handlemodalstatuslabelchange}></lightning-input>
+                    </div>
+                    <div class="padding10">
+                        <lightning-input type="number" placeholder="Enter Min Range" name="Min Range" label="Min Range" value={modalminrange} onchange={handlemodalminrangechange}></lightning-input>
+                    </div>
+                    <div class="padding10">
+                        <lightning-input type="number" placeholder="Enter Max Range" name="Max Range" label="Max Range" value={modalmaxrange} onchange={handlemodalmaxrangechange}></lightning-input>
+                    </div>
+                </div>
+                <div class="slds-col slds-large-size_6-of-12 slds-medium-size_6-of-12 slds-size_6-of-12 input-class">
+                    <div class="padding10">
+                        <lightning-input type="text" placeholder="Enter Static Resource Name" name="Static Resource Name" label="Static Resource Name" value={modalstaticresourcename} onchange={handlemodalstaticresourcenamechange}></lightning-input>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- modal footer start-->
+        <footer class="slds-modal__footer">
+            <button class="slds-button slds-button_neutral" onclick={hideModalBox}>Cancel</button>
+            <button class="slds-button slds-button_brand" onclick={saveNewStatus}>Save</button>
+        </footer>
+
+        </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+    <!-- add/edit status modal end -->
+
+    <!-- add/edit status modal start -->      
+   <template if:true={isShowDeleteModal}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+        <!-- modal header start -->
+        <header class="slds-modal__header my-modal-header">
+            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideDeleteModalBox}>
+                <lightning-icon icon-name="utility:close"
+                alternative-text="close"
+                variant="inverse"
+                size="small" ></lightning-icon>
+                <span class="slds-assistive-text">Close</span>
+            </button>
+            <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Delete Status?</h2>
+        </header>
+
+        <!-- modal body start -->
+        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+            Are you sure you want to delete the Go/No-Go Status?
+            <div class="deletemodalbuttons">
+                <button class="slds-button slds-button_text-destructive" onclick={hideDeleteModalBox}>Cancel</button>
+                <button class="slds-button slds-button_destructive" onclick={deleteStatus}>Delete</button>
+            </div>
+        </div>
+
+        </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+    <!-- add/edit status modal end -->
+
+    <template if:true={isShowLinkedConfigModal}>
+
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+        <!-- modal header start -->
+        <header class="slds-modal__header">
+            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideCloseLinkedModalBox}>
+                <lightning-icon icon-name="utility:close"
+                alternative-text="close"
+                variant="inverse"
+                size="small" ></lightning-icon>
+                <span class="slds-assistive-text">Close</span>
+            </button>
+            <h2 class="slds-text-heading_medium slds-hyphenate">Create a Linked Configuration</h2>
+        </header>
+
+        <!-- modal body start -->
+        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-12">
+            <div class="slds-grid slds-wrap" >
+                <div class="slds-col slds-large-size_6-of-12 slds-medium-size_6-of-12 slds-size_6-of-12">
+                    <div class="padding10">
+                        <lightning-input type="text" max-length ="80" placeholder="New Team Questions" name="Linked Configuration Name" label="Linked Configuration Name" value={linkedConfigName} onchange={handleLinkedConfigNamechange}></lightning-input>
+                    </div>
+                </div>
+                <div class="slds-col slds-large-size_6-of-12 slds-medium-size_6-of-12 slds-size_6-of-12">
+                    <div class="padding10">
+                        <h1>Select Configurations</h1>
+                        <div class="borderclass max-height-linked">
+                            <template for:each={linkedConfigList} for:item="ptr">
+                                <lightning-input key={ptr.value} id={ptr.value} type="checkbox" label={ptr.label} checked={ptr.selected} onchange={handleCheckedConfig}></lightning-input>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- modal footer start-->
+        <footer class="slds-modal__footer">
+            <button class="slds-button slds-button_neutral" onclick={hideCloseLinkedModalBox}>Cancel</button>
+            <button class="slds-button slds-button_brand" onclick={cacheLinkedConfig}>Save</button>
+        </footer>
+
+        </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+    <!-- add/edit status modal end -->
+</template>

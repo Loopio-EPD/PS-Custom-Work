@@ -1,0 +1,257 @@
+<template>
+    <div class={dynamiClassName}>
+        
+        
+        <header class="slds-modal__header header-class">
+            <template if:false={fromoverridebutton}>
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={cancelButtonClick}>
+                    <lightning-icon icon-name="utility:close"
+                        alternative-text="close"
+                        variant="inverse"
+                        size="small" ></lightning-icon>
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+            </template>
+            <template if:true={showLinkedConfigSelection}>
+                <h2 class="slds-text-heading_medium slds-hyphenate">Select Configuration</h2>
+            </template>
+            <template if:false={showLinkedConfigSelection}>
+                <h2 class="slds-text-heading_medium slds-hyphenate">Go/No-Go Submission</h2>
+            </template>
+        </header>
+
+        <div class="all-component">
+            <div class="inner-component"> 
+                <template if:false={recordidpresent}>
+                    <div class="center-elements">
+                        <h2 class="selectoppclass">Choose Opportunity to create Go/No-Go Submission</h2>
+                        <div class="opp-layout">
+                            <c-custom-lookup-component obj-name="Opportunity" search-placeholder="Search Opportunity" icon-name="standard:opportunity" onownervaluechange={handleopportunitychange}> </c-custom-lookup-component>    
+                        </div>
+                        <button class="slds-button slds-button_brand" onclick={selectOpp} title="Continue">Continue</button>
+                    </div>
+                </template>
+
+                <template if:true={recordidpresent}>
+                    <template if:false={showLoopioProjectCreationPage}>
+                        <template if:true={showSpinner}>
+                            <lightning-spinner class="spinner-class" alternative-text="Loading" size="medium"></lightning-spinner>
+                        </template>
+
+                        <template if:true={showLinkedConfigSelection}>
+                            <div class="choose-project-type max-width-class">
+                                <p class="linkedDesc-class">Select which you would like to respond to:</p>
+                                <template for:each={linkedConfigurationsList} for:item="linkedConfig">
+                                    <label key={linkedConfig.value} class="slds-media type-wrap slds-m-bottom_x-small">
+                                        <div class="slds-media__figure">
+                                            <span class="slds-radio">
+                                                <input name="default" disabled={linkedConfig.isCompleted} type="radio" id={linkedConfig.value}/>
+                                                <span class="slds-radio--faux slds-m-right--none"></span>
+                                            </span>
+                                            <span class="slds-m-left_small">{linkedConfig.label}</span>
+                                        </div>
+                                    </label>
+                                </template>
+                            </div>
+                        </template>
+
+                        <template if:false={showLinkedConfigSelection}>
+                            <template if:false={gonogoansweridpresent}>
+
+                                <template if:false={questionsPresent}>
+                                    <template if:false={showSpinner}>
+                                        <div class="center-elements">
+                                            <template if:false={submissionCompletedForContinue}>
+                                                <lightning-icon icon-name="utility:lock" size="small" variant="inverse" title = "Access Denied" class="icon-color"></lightning-icon>
+                                            </template>
+                                            <div class="fontsize-class">
+                                                <template if:true={submissionCompletedForContinue}>
+                                                    This Go-No/Go Submission is already completed.
+                                                </template>
+                                                <template if:false={submissionCompletedForContinue}>
+                                                    No Questions found.
+                                                </template>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </template>
+        
+                                <template if:true={questionsPresent}>
+                                    <div class="scorll-container">
+                                        <div for:each={sectionsWrapperList} for:item="section" key={section.sectionId}>
+                                            <lightning-accordion class="accordion-class" aura:id={section.sectionId} active-section-name={allSectionNames} allow-multiple-sections-open="true">
+                                                <lightning-accordion-section name={section.sectionName} label={section.sectionName}>
+                                                    <lightning-layout multiple-rows="true">
+                                                            <template for:each={section.questionRecords} for:item="question">
+                                                                <lightning-layout-item size="6" padding="around-small" key={question.tagId}>
+                                                                    <template if:true={question.isTextArea}>
+                                                                        <label class="label-class-inner"><template if:true={question.isRequired}><span class="required-class">* </span></template>{question.questionLabel}</label>
+                                                                        <lightning-textarea class="label-class-inner" id={question.tagId} name="textarea" onchange={handleChange}></lightning-textarea>
+                                                                        <label class="label-class"><template if:true={question.requiredError}><span class="required-class">*Required field.</span></template></label>
+                                                                    </template>
+                                                                    <template if:true={question.isNumber}>
+                                                                        <label class="label-class-inner"><template if:true={question.isRequired}><span class="required-class">* </span></template>{question.questionLabel}</label>
+                                                                        <lightning-input class="label-class-inner" name="num" id={question.tagId} type='number' onchange={handleChange}></lightning-input>
+                                                                        <label class="label-class"><template if:true={question.requiredError}><span class="required-class">*Required field.</span></template></label>
+                                                                    </template>
+                                                                    <template if:true={question.salesforceInput}>
+                                                                        <label class="label-class-inner"><template if:true={question.isRequired}><span class="required-class">* </span></template>{question.questionLabel}</label>
+                                                                        <div class="margin-top-class"><h><lightning-icon icon-name="utility:salesforce1" size="x-small" variant="inverse" class="info-icon-color"></lightning-icon>  {question.answerValue}</h></div>
+                                                                    </template>
+                                                                    <template if:true={question.isDropdown}>
+                                                                        <label class="label-class-inner"><template if:true={question.isRequired}><span class="required-class">* </span></template>{question.questionLabel}</label>
+                                                                        <lightning-combobox class="label-class-inner" id={question.tagId} placeholder="Select an option" name="dropdown" options={question.options} onchange={handleChange}></lightning-combobox>
+                                                                        <label class="label-class"><template if:true={question.requiredError}><span class="required-class">*Required field.</span></template></label>
+                                                                    </template>
+                                                                </lightning-layout-item>
+                                                            </template>
+                                                    </lightning-layout>
+                                                </lightning-accordion-section>
+                                            </lightning-accordion>
+                                        </div>
+                                    </div>
+                                </template>
+                            </template>
+        
+                            <template if:true={gonogoansweridpresent}>
+                                <div class="center-elements">
+                                    <template if:true={isApproved}>
+                                        <div class="fontsize-class linkedDesc-class">
+                                            {linkedDescriptionMsg}
+                                        </div>
+                                        <template if:true={isFinalScoreShown}>
+                                            <div class="fontsize-class">
+                                                Your Go/No-Go record is successfully created.
+                                            </div>
+                                        </template>
+                                        <template if:true={gonogoscorepresent}>
+                                            <div class="fontsize-class">
+                                                {configName} : {gonogoscore}%
+                                                <div class="info-style">
+                                                    <lightning-icon icon-name="utility:info" size="x-small" variant="inverse" class="info-icon-color"></lightning-icon>
+                                                    <div class="slds-popover slds-popover_tooltip slds-nubbin_bottom-left" role="tooltip">
+                                                    <div class="slds-popover__body">This score was calculated using your responses to your selected Go/No-Go Configuration. The impact of each response on your final score can be adjusted under Go/No-Go Configurations.</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                        <template if:true={gonogostatuspresent}>
+                                            <div class="fontsize-class">
+                                                Status : <img src={gonogostatus} width="30" height="30"/> {statuslabel}
+                                            </div>
+                                        </template>
+                                        <template if:false={hideProjectCreationButton}>
+                                            <template if:true={approvalProcessPresent}>
+                                                <template if:true={showSubmitForApprovalButton}>
+                                                    <div class="fontsize-class">
+                                                        In order to create a Loopio project for an opportunity with a
+                                                        <br>
+                                                        low Go/Go-No score, you must submit for approval.
+                                                    </div>
+                                                </template>
+                                            </template>
+                                        </template>
+                                        <div class="margin-top-class">
+                                            <template if:false={approvalProcessPresent}>
+                                                <template if:false={hideProjectCreationButton}>
+                                                    <template if:true={loopioPackagePresent}>
+                                                        <button class="slds-button slds-button_brand button-class margin-right-class" onclick={createLoopioProject}>Create Loopio Project</button>
+                                                    </template>
+                                                    <template if:false={loopioPackagePresent}>
+                                                        <template if:true={avnioPackagePresent}>
+                                                            <button class="slds-button slds-button_brand button-class margin-right-class" onclick={createLoopioProject}>Create Loopio Project</button>
+                                                        </template>
+                                                    </template>
+                                                </template>
+                                            </template>
+                                            <button class="slds-button slds-button_neutral" onclick={openGoNoGoRecord} title="View Details">View Details</button>
+                                            <template if:false={hideProjectCreationButton}>
+                                                <template if:true={approvalProcessPresent}>
+                                                    <template if:true={showSubmitForApprovalButton}>
+                                                        <button class="slds-button slds-button_brand button-class" onclick={submitForApproval}>Submit for Approval</button>
+                                                    </template>
+                                                </template>
+                                            </template>
+                                        </div>
+                                    </template>
+                                    <template if:false={isApproved}>
+                                        <div>
+                                            <lightning-icon icon-name="utility:lock" size="small" variant="inverse" title = "Access Denied" class="icon-color"></lightning-icon>
+                                            <div class="fontsize-class margin-top-class">
+                                            {apprvalerrormsg}
+                                            </div>
+                                        </div>
+                                        <button class="slds-button slds-button_brand button-class" onclick={backButtonClick}>Back</button>
+                                    </template>
+                                </div>
+                            </template>
+                        </template>
+                    </template>
+
+                    <template if:true={showRecordTypeSelectionForLFS}>
+                        <div class="choose-project-type max-width-class">
+                            <h1 class="fontsize-class">Choose Record Type</h1>
+                            <lightning-radio-group name="radioGroup1"
+                                options={recordTypesForLFS}
+                                onchange={handleRecordTypeChange}
+                                value={selectedRecordType}
+                                type="radio"></lightning-radio-group>
+                        </div>
+                    </template>
+
+                    <template if:false={showRecordTypeSelectionForLFS}>
+                        <template if:true={showLoopioProjectCreationPage}>
+                            <template if:true={showProjectTypeSelection}>
+                                <div class="choose-project-type max-width-class">
+                                    <h1 class="fontsize-class">Choose Project Type</h1>
+                                    <lightning-radio-group name="radioGroup"
+                                        options={projecttypeoptions}
+                                        onchange={handleProjectTypeChange}
+                                        value="Loopio"
+                                        type="radio"></lightning-radio-group>
+                                    
+                                </div>
+                            </template>
+                            <template if:false={showProjectTypeSelection}>
+                                <template if:true={loopioPackagePresent}>
+                                    <iframe src={loopioCreateProjectUrl} height="760px" width="100%"></iframe>
+                                </template>
+                            </template>
+                        </template>
+                    </template>
+                </template>
+            </div>
+        </div>
+        
+        <footer class="slds-modal__footer footer-class">
+            <template if:true={showNextButton}>
+                <button class="slds-button slds-button_brand" onclick={showFinalScore} title="Next">Next</button>
+            </template>
+            <template if:false={showNextButton}>
+                <button class="slds-button slds-button_neutral" onclick={cancelButtonClick} title="Close">Close</button>
+                <template if:true={showRecordTypeSelectionForLFS}>
+                    <button class="slds-button slds-button_brand" onclick={continueToRecTypeSelection} title="Contiune">Contiune</button>
+                </template>
+                <template if:false={showRecordTypeSelectionForLFS}>
+                    <template if:false={showLoopioProjectCreationPage}>
+                        <template if:false={gonogoansweridpresent}>
+                            <template if:true={questionsPresent}>
+                                <template if:false={showSpinner}>
+                                    <button class="slds-button slds-button_brand" onclick={saveAnswers} title="Save">Save</button>
+                                </template>
+                            </template>
+                        </template>
+                    </template>
+                    <template if:true={showLoopioProjectCreationPage}>
+                        <template if:true={showProjectTypeSelection}>
+                            <button class="slds-button slds-button_brand" onclick={selectOptionForProjectType} title="Create">Create</button>
+                        </template>
+                    </template>
+                </template>
+                <template if:true={showLinkedConfigSelection}>
+                    <button class="slds-button slds-button_brand" onclick={selectLinkedConfig} title="Next">Next</button>
+                </template>
+            </template>
+        </footer>
+    </div>
+</template>

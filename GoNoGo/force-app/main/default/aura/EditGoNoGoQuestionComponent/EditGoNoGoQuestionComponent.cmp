@@ -1,0 +1,79 @@
+<aura:component controller= "GoNoGoController" implements="lightning:actionOverride,flexipage:availableForRecordHome,force:hasRecordId" access="global">
+    <aura:attribute name="showSpinner" type="Boolean" default="true"/>
+    <aura:attribute name="saveAndNew" type="Boolean" default="false"/>
+    <aura:attribute name="questionlabel" type="String" default="" access="public"/>
+    <aura:attribute name="sectionId" type="String" default="" access="public"/>
+    <aura:attribute name="questionName" type="String" default="" access="public"/>
+    <aura:attribute name="makerequired" type="Boolean" default="false" access="public"/>
+    <aura:attribute name="questionsequence" type="Integer" default="" access="public"/>
+    <aura:attribute name="maxscore" type="Integer" default="" access="public"/>
+    <aura:attribute name="datatype" type="String" default="" access="public"/>
+    <aura:attribute name="opportuntityFieldAPIName" type="String" default="" access="public"/>
+    <aura:attribute name="datatypeoptions" type="List"/>
+    <aura:attribute name="opportunityfields" type="List"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <lightning:navigation aura:id="navigation"/>
+    
+    <div aura:id="editDialog" role="dialog" tabindex="-1" aria-labelledby="header43" class="slds-modal slds-fade-in-open">
+        <aura:if isTrue="{!v.showSpinner }">
+            <lightning:spinner size="medium" variant="brand" />
+        </aura:if>
+        <div class="slds-modal__container">
+            <div class="slds-modal__header">
+                <h2 class="slds-text-heading--medium">Edit {!v.questionName}</h2>
+            </div>
+            <div class="slds-modal__content slds-p-around--medium slds-grid slds-wrap">
+                <div class="slds-grid slds-grid_align-end slds-size_4-of-4">
+                    <h2><span class="required-class">*</span> = Required Information</h2>
+                </div>
+                <div class="slds-grid slds-gutters full-width">
+                  <div class="slds-col slds-size_1-of-2 left-margin-firstrow">
+                  	<h2 class="slds-p-horizontal_x-small custom-margin">Go/No-Go Question Name</h2>
+                    <h2 class="slds-p-horizontal_x-small">{!v.questionName}</h2>
+                  </div>
+                  <div class="slds-col slds-size_1-of-2 left-margin-firstrow">
+                  	<lightning:input aura:id="makerequired" name="makerequired" label="Make Required" checked="{!v.makerequired}" type="checkbox" class="slds-p-horizontal_x-small custom-margin"/>
+                  </div>
+                </div>
+                
+                <div class="slds-grid slds-gutters full-width">
+                  <div class="slds-col slds-size_1-of-2">
+                	  <lightning:textarea aura:id="questionlabel" name="questionlabel" label="Question Label" value="{!v.questionlabel}" class="slds-p-horizontal_x-small custom-margin" required="true"/>
+                  </div>
+                  <div class="slds-col slds-size_1-of-2 custom-margin left-margin-datatype">
+                	  <lightning:combobox name="datatype" required="true" label="Data Type" value="{!v.datatype}" placeholder="Select Data Type" options="{! v.datatypeoptions }" onchange="{! c.handleDataTypeChange }"/>
+                  </div>
+                </div>
+                
+                <div class="slds-grid slds-gutters full-width">
+                  <div class="slds-col slds-size_1-of-2">
+                	  <lightning:input aura:id="questionsequence" type="number" name="questionsequence" label="Question Sequence" value="{!v.questionsequence}" class="slds-p-horizontal_x-small custom-margin" required="true"/>
+                  </div>
+                  <div class="slds-col slds-size_1-of-2 custom-margin left-margin-new">
+                    <aura:if isTrue="{!v.datatype == 'Salesforce Input'}">
+                      <lightning:combobox name="datatype" required="true" label="Salesforce Source" value="{!v.opportuntityFieldAPIName}" placeholder="Select Salesforce Source" options="{! v.opportunityfields }" onchange="{! c.handleOpportunityFieldChange }"/>
+                    </aura:if>
+                  </div>
+                </div>
+                <div class="slds-grid slds-gutters full-width">
+                  <div class="slds-col slds-size_1-of-2 left-margin custom-margin-top padding-left-class">
+                    <h2><span class="required-class">*</span> Go/No-Go Section</h2>
+                    <c:customLookupComponent aura:id="customlookupcmp" fromAura="true" restrictToRemove="true" defaultRecordId="{!v.sectionId}" objName="Go_No_Go_Section__c" searchPlaceholder="Search Go/No-Go Section" iconName="custom:custom9" onownervaluechange="{!c.handlesectionchange}"> </c:customLookupComponent>   
+                  </div>
+                  <div class="slds-col slds-size_1-of-2">
+                    <lightning:input aura:id="maxscore" type="number" name="maxscore" label="Max Score" value="{!v.maxscore}" class="slds-p-horizontal_x-small custom-margin"/>
+                  </div>
+                </div>
+                
+            </div>
+            <div class="slds-modal__footer"> 
+                <div class="center-align">
+                    <lightning:button variant="neutral" label="Cancel" onclick="{!c.cancelCreation}"/>
+                    <lightning:button variant="brand" label="Save" onclick="{!c.saveRecord}"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</aura:component>

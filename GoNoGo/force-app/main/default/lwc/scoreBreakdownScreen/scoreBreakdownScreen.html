@@ -1,0 +1,70 @@
+<template>
+    <div class="all-component">
+        <template if:true={showData}>
+            <div class="scorll-container">
+                <span class="score-breakdown">Score Breakdown</span>
+                <div for:each={linkedSubmissionsWrapperList} for:item="linkedconfig" key={linkedconfig.configId}>
+                    <div class="outertablediv">
+                        <div class="configheaderdiv">
+                            <lightning-icon icon-name="standard:lead_list" size="small" variant="inverse"></lightning-icon><span class="confignamediv">{linkedconfig.configName} - {linkedconfig.score}</span>
+                        </div>
+                        <template if:false={linkedconfig.hideTable}>
+                            <div class="slds-theme--default">
+                                <div class="tableheight">
+                                    <div class="slds-scrollable_y tableFixHead" >
+                                        <table class="slds-table--header-fixed slds-table_cell-buffer slds-table slds-table_cell-buffer slds-table_bordered">
+                                            <thead>
+                                                <tr class="trheader" >
+                                                    <th scope="col" class="width30">
+                                                        <div title="Go/No-Go Q&amp;A Name">Go/No-Go Q&amp;A Name</div>
+                                                    </th>
+                                                    <th scope="col" class="width30">
+                                                        <div class="leftmargin" title="Question">Question</div>
+                                                    </th>
+                                                    <th scope="col" class="width20">
+                                                        <div class="leftmargin" title="Value">Value</div>
+                                                    </th>
+                                                    <th scope="col" class="width10">
+                                                        <div class="leftmargin" title="Score">Score</div>
+                                                    </th>
+                
+                                                    <th scope="col" class="width10">
+                                                        <div class="leftmargin" title="Max Score">Max Score</div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <template for:each={linkedconfig.questionRecords} for:item="question">
+                                                    <tr class="slds-hint-parent" key={question.id}>
+                                                        <td class="width30">
+                                                            <lightning-formatted-text value={question.questionName} ></lightning-formatted-text>
+                                                        </td>
+                                                        <td class="width30">
+                                                            <lightning-formatted-text title={question.questionLabel} class="slds-truncate truncateText" value={question.questionLabel} ></lightning-formatted-text>
+                                                        </td>
+                                                        <td class="width20">
+                                                            <lightning-formatted-text title={question.value} value={question.value} class="slds-truncate truncateText" ></lightning-formatted-text>
+                                                        </td>
+                                                        <td class="width10">
+                                                            <lightning-formatted-text value={question.score} ></lightning-formatted-text>
+                                                        </td>
+                                                        <td class="width10">
+                                                            <lightning-formatted-text value={question.maxScore} ></lightning-formatted-text>
+                                                        </td>
+                                                    </tr>
+                                                </template>
+                                            </tbody> 
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                        <template if:true={linkedconfig.hideTable}>
+                            <div class="tableheightempty"></div>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </div>
+</template>

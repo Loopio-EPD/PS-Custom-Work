@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Max_Score_Entered__c</fullName>
+    <externalId>false</externalId>
+    <label>Max Score Entered</label>
+    <summarizedField>Go_No_Go_Question_Bank_Scoring__c.Score__c</summarizedField>
+    <summaryForeignKey>Go_No_Go_Question_Bank_Scoring__c.Go_No_Go_Question_Bank__c</summaryForeignKey>
+    <summaryOperation>max</summaryOperation>
+    <trackTrending>false</trackTrending>
+    <type>Summary</type>
+</CustomField>

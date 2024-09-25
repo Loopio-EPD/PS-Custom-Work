@@ -1,0 +1,45 @@
+.all-component {
+    height: auto;
+    overflow: auto;
+    margin: 16px;
+    line-height: 20px;
+}
+.spinnerClass {
+    position: fixed;
+    z-index: 9002 !important;
+    height: 100%;
+}
+.alldiv{
+    margin: 10px;
+}
+.icon-color{
+    --slds-c-icon-color-foreground-default: #747474;
+    --slds-c-icon-color-foreground: #747474;
+    cursor: pointer;
+}
+.icon-class{
+    margin-top: 6px;
+    margin-right: 10px;
+}
+.margin-left-class{
+    margin-left: 26px;
+}
+.desc-font{
+    font-size: 14px;
+}
+.configdesctext{
+    margin-bottom: 20px;
+}
+.configdetailclass{
+    text-align: center;
+    width: 100%;
+}
+.required-class {
+    color: #ba0517;
+}
+.margintop4{
+    margin-top: 4px;
+}
+.minheightformodal{
+    min-height: 250px;
+}

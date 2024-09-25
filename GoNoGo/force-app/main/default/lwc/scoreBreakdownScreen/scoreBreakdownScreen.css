@@ -1,0 +1,66 @@
+.all-component {
+    background-color: white;
+    position: relative;
+}
+.scorll-container{
+    overflow: auto;
+}
+.tableFixHead {
+    overflow: auto;
+    max-height: 250px;
+}
+.tableFixHead table {
+    border-collapse: collapse;
+    width: 100%;
+}
+.tableFixHead th {
+   position: sticky;
+   top: 0;
+   z-index: 4;
+   background:#F3F3F3;
+}
+.score-breakdown {
+   font-weight: bold;
+   margin-left:15px;
+   font-size: 15px
+}
+.outertablediv {
+   margin-top:20px;
+   border: 1px solid #ccc;
+   border-radius: 4px;
+}
+.configheaderdiv {
+   padding: 10px;
+   background-color:#f3f3f3;
+   border-bottom: 1px solid #ccc;
+}
+.tableheight {
+   max-height:250px;
+}
+.tableheightempty {
+   height:100px;
+}
+.confignamediv {
+   font-weight: bold;
+   margin-left:15px;
+}
+.trheader {
+   height: 35px;
+}
+.width30 {
+   width: 30%;
+}
+.width20 {
+   width: 20%;
+}
+.width10 {
+   width: 10%;
+}
+.truncateText {
+   max-width: 200px;
+   display: block;
+   overflow: hidden;
+}
+.leftmargin {
+   margin-left: 6px;
+}

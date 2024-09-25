@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Max_Score_Validation</fullName>
+    <active>true</active>
+    <description>Max Score Validation</description>
+    <errorConditionFormula>IF(ISNULL(Go_No_Go_Question_Bank__r.Max_Score__c), false, Go_No_Go_Question_Bank__r.Max_Score__c &lt; Score__c)</errorConditionFormula>
+    <errorDisplayField>Score__c</errorDisplayField>
+    <errorMessage>Question score exceeds max score.</errorMessage>
+</ValidationRule>
