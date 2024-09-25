@@ -1,0 +1,99 @@
+<apex:component access="global" controller="ProjectDetailController_Custom">
+    <apex:attribute name="project" description="Project Object" type="SObject" access="global" assignTo="{!projectInput}"/>
+
+    <apex:attribute name="recipientUser" description="Project Object" type="SObject" access="global"/>
+
+    <apex:attribute name="flowName" type="String" assignTo="{!flowDevName}" description="Flow Developer Name from custom metadata(Notification Flow)"/>
+    <apex:attribute name="recId" type="String" assignTo="{!recordId}" description="record Id for Project Question"/>
+
+
+    <!-- Project Detail -->
+    <table border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;padding:0" width="100%">
+    <tr style="background-color: #fff;">
+        <td style="border-collapse:collapse;padding:0 34px 10px">
+            <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;padding:0" width="100%">
+                <tbody>
+                    <tr height="10">
+                        <td style="border-collapse:collapse">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td style="border-collapse:collapse">
+                            <table border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;padding:0" width="100%">
+                                <tbody>
+                                    <tr style="border-bottom:1px solid #e0e5ee;border-top:1px solid #e0e5ee">
+                                        <td style="border-collapse:collapse;color:#2b2826;font-size:14px;line-height:24px;padding:8px 0;width: 25%;">
+                                            <b>Project Name:</b>
+                                        </td>
+                                        <td  colspan="3">
+                                            <span style="color:#2b2826;text-decoration:none"> {!projectSO.avnio__ProjectName__c}</span>
+                                        </td>
+                                       <!-- <td style="border-collapse:collapse;color:#2b2826;font-size:14px;line-height:24px;padding:8px 0;width:25%">
+                                            <b>Project Description:</b>
+                                        </td>
+                                        <td style="width:25%">
+                                            <span style="color:#2b2826;text-decoration:none">{!projectSO['avnio__Description__c']}</span>
+                                        </td> -->
+                                    </tr>
+                                    <tr style="border-bottom:1px solid #e0e5ee">
+
+                                        <td style="border-collapse:collapse;color:#2b2826;font-size:14px;line-height:24px;padding:8px 0;width:25%">
+                                            <b>Project Number:</b>
+                                        </td>
+                                        <td style="width:25%">
+                                            <span style="color:#2b2826;text-decoration:none">{!projectSO.Name}</span>
+                                        </td>
+                                        <td style="border-collapse:collapse;color:#2b2826;font-size:14px;line-height:24px;padding:8px 0;width:25%">
+                                            <b>Project Owner:</b>
+                                        </td>
+                                        <td style="width:25%">
+                                            <span style="color:#2b2826;text-decoration:none">{!projectSO['Owner']['Name']}</span>
+                                        </td>
+
+                                       
+                                    </tr>
+                                    <tr style="border-bottom:1px solid #e0e5ee">
+                                        <td style="border-collapse:collapse;color:#2b2826;font-size:14px;line-height:24px;padding:8px 0;width:25%">
+                                            <b>Project Status:</b>
+                                        </td>
+                                        <td style="width:25%">
+                                            <span style="color:#2b2826;text-decoration:none">{!projectSO['avnio__Status__c']}</span>
+                                        </td>
+                                         <td style="border-collapse:collapse;color:#2b2826;font-size:14px;line-height:24px;padding:8px 0;width:25%">
+                                            <b>Project Due Date:</b>
+                                        </td>
+                                        <td style="width:25%">
+                                            <span style="color:#2b2826;text-decoration:none">
+                                                <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                                                    <apex:param value="{!projectSO['avnio__DueDate__c']}" />
+                                                </apex:outputText></span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr height="10">
+                        <td style="border-collapse:collapse">&nbsp;</td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+
+    <!-- View Question Button -->
+    <tr style=" background-color: #fff;">
+        <td style="text-align:center;">
+             <a href="{!LEFT($Api.Partner_Server_URL_140, FIND(".com/",$Api.Partner_Server_URL_140)+3)+'/'+projectSO['Id']}" target="_blank" style="border-radius: 3px; color: rgb(1, 118, 211); width:100px;max-width:100%;text-decoration:none;font-size: 90%;background: white
+;margin: 0 10px; display: inline-block; text-align: center; font-weight: 500; padding: 12px 20px 12px 20px;border: 1px solid rgb(1, 118, 211);">
+            Open Project
+            </a>
+            <a href="{!LEFT($Api.Partner_Server_URL_140, FIND(".com/",$Api.Partner_Server_URL_140)+3)+'/lightning/cmp/avnio__QuestionFullPage?c__recordId='+projectSO['Id']+'&c__questionId='+recId}" target="_blank" style="border-radius: 3px; color: white; width:110px;max-width:100%;text-decoration:none;font-size: 90%;background: rgb(1, 118, 211)
+;margin: 0 10px; display: inline-block; text-align: center; font-weight: 500; padding: 12px 20px 12px 20px;">
+            Review Question
+            </a>
+        </td>
+
+    </tr>
+</table>
+
+</apex:component>

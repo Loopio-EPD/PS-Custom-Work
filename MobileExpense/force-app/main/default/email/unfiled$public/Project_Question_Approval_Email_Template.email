@@ -1,0 +1,92 @@
+<messaging:emailTemplate subject="Project Question Ready for Review - {!relatedTo.avnio__ProjectId__r.Name}" recipientType="User" relatedToType="avnio__ProjectQuestion__c">
+    <messaging:htmlEmailBody >
+        <div class="avnio_main-template-wrap" style="background-color:#f4f6f9;font-family:SalesforceSans-Regular,Helvetica,Arial,sans-serif;">
+            <table bgcolor="transparent"  background="https://avnio--c.documentforce.com/servlet/servlet.ImageServer?id=0153X000006i9uG&oid=00D3X000003drSO" border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse" width="100%">
+                <tbody>
+                    <tr>
+                        <td align="center" style="border-collapse:collapse;padding:0">
+                            <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;max-width:850px;width:850px;">
+                                <tbody>
+                                    <tr height="0">
+                                        <td style="border-collapse:collapse">&nbsp;</td>
+                                    </tr>
+
+                                    <!-- Common Header -->
+                                    <avnio:AvnioEmailHeader logoURL="https://avnio--c.documentforce.com/servlet/servlet.ImageServer?id=0153X000006i9sy&oid=00D3X000003drSO"
+                                        emailBannerImgURL="https://avnio--c.documentforce.com/servlet/servlet.ImageServer?id=0153X000006i9sj&oid=00D3X000003drSO"
+                                        mailTitle="Project Question Submitted for Approval "/>
+                                    <!-- Common Header Ends -->
+
+                                    <!-- Project Detail -->
+                                    <tr style="background-color: #fff;">
+                                        <td style="border-collapse:collapse;padding:0 34px 10px">
+                                            <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;padding:0" width="100%">
+                                                <tbody>
+                                                    <tr height="10">
+                                                        <td style="border-collapse:collapse">&nbsp;</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border-collapse:collapse">
+                                                            <p>Hello {!recipient.FirstName},</p>
+                                                            <p>A Project Question has been submitted for your review for Project <b>{!relatedTo.avnio__ProjectId__r.Name} </b></p>
+                                                            <!-- - {!relatedTo.avnio__ProjectId__r.avnio__ProjectName__c}</b>. Please find details below. You can click on a <b>Review Question</b> button to Review Question &amp; <b>Open Project</b> button to go to project.</p>
+                                                        -->
+                                                        </td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+
+                                   <tr>
+                                        <td>
+                                        <c:projectdetailcmp_parent recId="{!relatedTo.Id}" recipientUser="{!recipient}"/>
+                                     
+                                        </td>
+                                   </tr>
+
+                                    <tr>
+                                        <td style=" background-color: #fff;padding: 34px 45px; text-align: left;">
+                                        <c:projectquestionlist userId="{!recipient.Id}" recId="{!relatedTo.Id}" type="ProjectQuestionAssignment" flowName="ProjectQuestionAssignment" />
+                                            
+                                            <table style="width: 100%;">
+                                                <tr>
+                                                    <td height="auto" style="border-collapse:collapse; line-height: 1.5;" valign="top" width="100%">
+                                                      <!--  <p>Thanks &amp; Regards,<br/></p> -->
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <!-- Questions Table Ends -->
+
+                                    <!-- Space Row -->
+                                    <tr height="10">
+                                        <td style="border-collapse:collapse">&nbsp;</td>
+                                    </tr>
+                                    <!-- Space Row Ends -->
+
+                                    <!-- Footer -->
+                                    <tr>
+                                        <td style="border-collapse:collapse">
+                                           <c:avnioemailfootercmp flowName="ProjectQuestionAssignment"/>
+                                        </td>
+                                    </tr>
+                                    <!-- Footer Ends -->
+
+                                    <!-- Space Row -->
+                                    <tr height="10">
+                                        <td style="border-collapse:collapse">&nbsp;</td>
+                                    </tr>
+                                    <!-- Space Row Ends -->
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </messaging:htmlEmailBody>
+    <messaging:plainTextEmailBody >You have been assigned as Approver for Questions under Project {!relatedTo.avnio__ProjectId__r.Name} - {!relatedTo.avnio__ProjectId__r.avnio__ProjectName__c}. Please click here for more details.</messaging:plainTextEmailBody>
+</messaging:emailTemplate>

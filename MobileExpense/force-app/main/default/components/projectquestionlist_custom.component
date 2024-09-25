@@ -1,0 +1,62 @@
+<apex:component controller="ProjectQuestionListController_Custom" access="GLOBAL">
+    <apex:attribute name="userId" type="String" assignTo="{!currentUserId}" description="User Id for assigned Project List"/>
+    <apex:attribute name="recId" type="String" assignTo="{!recordId}" description="record Id for Project Question"/>
+    <apex:attribute name="type" type="String" assignTo="{!questionStatus}" description="Assignee or Reviewer"/>
+    <apex:attribute name="flowName" type="String" assignTo="{!flowDevName}" description="Flow Developer Name from custom metadata(Notification Flow)"/>
+    <apex:attribute name="OnlyReminder" type="boolean" assignTo="{!isOnlyReminder}" description="Only Remind for Questions"/>
+    <apex:outputPanel >
+        <!--<table style="width: 100%;">
+            <tr>
+                <td align="center" height="auto" style="border-collapse:collapse" valign="top" width="100%">
+                    <h2 style="padding:0;border:0;outline:0;font-weight:inherit;font-style:inherit;font-size:100%;font-family:inherit;vertical-align:baseline;color:#16325c;font-family:SalesforceSans-Regular,Helvetica,Arial,sans-serif;font-weight:normal;margin:0;font-size:24px;line-height:48px;text-align:center;margin-bottom: 20px;">
+                        Project Questions
+                    </h2>
+                </td>
+            </tr>
+        </table>-->
+        <!--<b>Project Questions: </b><br/>-->
+        <apex:dataTable value="{!response.projectQuestionList}" var="pQuestion" styleClass="tableClass que-list" style="border-color: #e0e5ee;border-collapse:collapse;" width="100%" border="1">
+            <apex:column style="padding: 10px;">
+                <apex:facet name="header">
+                    <div style="font-size: 12px;color:#333;background-color: #e0e5ee;text-transform: uppercase;padding: 10px;">
+                        Question
+                    </div>
+                </apex:facet>
+                <!--
+                <apex:outputLink value="{!response.instanceURL}?c__recordId={!pQuestion.projectId}&c__questionId={!pQuestion.questionId}&c__filter=focused" target="_blank">
+                    
+                </apex:outputLink> -->
+                <apex:outputText value="{!pQuestion.questionName}" escape="false"/>
+            </apex:column>
+            <!--<apex:column style="padding: 10px;" >
+                <apex:facet name="header">
+                    <div style="font-size: 12px;color:#333;background-color: #e0e5ee;text-transform: uppercase;padding: 10px;">
+                        Due Date
+                    </div>
+                </apex:facet>
+                <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                    <apex:param value="{!pQuestion.dueDate}" />
+                </apex:outputText>
+            </apex:column>
+            -->
+            <apex:column style="padding: 10px;" >
+                <apex:facet name="header">
+                    <div style="font-size: 12px;color:#333;background-color: #e0e5ee;text-transform: uppercase;padding: 10px;">
+                        Status
+                    </div>
+                </apex:facet>
+                <apex:outputText value="{!pQuestion.status}">
+                </apex:outputText>
+            </apex:column>
+            <!--
+            <apex:column style="padding: 10px;">
+                <apex:facet name="header">
+                    <div style="font-size: 12px;color:#333;background-color: #e0e5ee;text-transform: uppercase;padding: 10px;">
+                        Comments
+                    </div>
+                </apex:facet>
+                <apex:outputText value="{!pQuestion.comment}"/>
+            </apex:column> -->
+        </apex:dataTable>
+    </apex:outputPanel>
+</apex:component>

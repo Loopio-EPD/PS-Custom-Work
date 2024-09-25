@@ -1,0 +1,6 @@
+<apex:component controller="ProjectDetailCmp_Custom_Parent" access="GLOBAL">
+    <apex:attribute name="recId" type="String" assignTo="{!recordId}" description="record Id for Project Question" access="global"/>
+    <apex:attribute name="recipientUser" description="Project Object"
+    type="SObject" access="global"/>
+    <c:ProjectDetailCmp_Custom project="{!response}" recId="{!recId}" recipientUser="{!recipientUser}" flowName="ProjectQuestionAssignment"/>
+</apex:component>

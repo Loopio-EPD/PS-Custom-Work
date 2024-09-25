@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CQ</fullName>
+    <active>true</active>
+    <description>Compliance Questionnaire</description>
+    <label>CQ</label>
+    <picklistValues>
+        <picklist>Win_Reason__c</picklist>
+        <values>
+            <fullName>Business Rules</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consultation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cost Centers</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Credit Card Data Feed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Credit Card PDF Matching</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Custom Fields</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Custom Workflows</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Daily Allowances</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Integration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OCR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Overall solution</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Price</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spend catcher</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spend controller</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>UI%2FUX</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>User friendliness</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>White Label</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>
