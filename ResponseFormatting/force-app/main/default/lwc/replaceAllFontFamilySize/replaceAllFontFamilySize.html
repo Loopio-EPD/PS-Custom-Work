@@ -1,0 +1,94 @@
+<template>
+    <lightning-card>
+        <template if:true={showreplaceall}>
+            <template if:true={showsuccess}>
+                <div style="text-align: center;font-size: 20px;margin: 20px;">
+                    <lightning-icon size="small" icon-name="action:approval" variant="inverse" alternative-text="Success" title="Success" ></lightning-icon>
+                    <h2>Responses Formatted Successfully.</h2>
+                </div>
+            </template>
+            <template if:false={showsuccess}>
+                <div class="slds-grid slds-wrap" style="margin: 20px;">
+                    <div class="slds-col slds-large-size_6-of-12 slds-medium-size_6-of-12 slds-size_6-of-12">
+                        <lightning-input label="New Font Style" name="fontstyle" value={fontstyle} type="text" onchange={handlefontstylehange}></lightning-input>
+                    </div>
+                    <div class="slds-col slds-large-size_6-of-12 slds-medium-size_6-of-12 slds-size_6-of-12" style="margin-left: 10px; width:47%">
+                        <lightning-input label="New Font Size (in px)" name="fontsize" value={fontsize} type="number" onchange={handlefontsizechange}></lightning-input>
+                    </div>
+                </div>
+                <lightning-spinner if:true={showSpinner} alternative-text="Processing responses..."></lightning-spinner>
+                <footer class="slds-modal__footer">
+                    <!-- <lightning-button variant="neutral" value="Cancel" ></lightning-button> -->
+                    <template if:false={showMessage}>
+                        <lightning-button name="replace" label="Replace" variant="brand" onclick={handleReplaceClick}></lightning-button>
+                    </template>
+                </footer>
+            </template>
+        </template>
+
+        <template if:true={showremoveallformat}>
+            <template if:true={showsuccess}>
+                <div style="text-align: center;font-size: 20px;margin: 20px;">
+                    <lightning-icon size="small" icon-name="action:approval" variant="inverse" alternative-text="Success" title="Success" ></lightning-icon>
+                    <h2>Removed Responses formatting Successfully.</h2>
+                </div>
+            </template>
+            <template if:false={showsuccess}>
+                <div>
+                    <h2 style="margin-left:20px;">Remove font size and family formatting from selected responses ?</h2>
+                    <div class="slds-grid slds-wrap" style="margin: 20px;">
+                        <div class="slds-col slds-large-size_6-of-12 slds-medium-size_6-of-12 slds-size_6-of-12">
+                            <lightning-input type="checkbox" label="Remove Font Size" checked={removeFontSize} onchange={handleRemoveFontSizeChange}></lightning-input>
+                        </div>
+                        <div class="slds-col slds-large-size_6-of-12 slds-medium-size_6-of-12 slds-size_6-of-12" style="margin-left: 10px; width:47%">
+                            <lightning-input type="checkbox" label="Remove Font Style" checked={removeFontFamily} onchange={handleRemoveFontFamilyChange}></lightning-input>
+                        </div>
+                    </div>
+                </div>
+                <lightning-spinner if:true={showSpinner} alternative-text="Processing responses..."></lightning-spinner>
+                <footer class="slds-modal__footer">
+                    <!-- <lightning-button variant="neutral" value="Cancel" ></lightning-button> -->
+                    <template if:false={showMessage}>
+                        <lightning-button name="remove" label="Remove" variant="brand" onclick={handleRemoveClick}></lightning-button>
+                    </template>
+                </footer>
+            </template>
+        </template>
+
+        <template if:true={showfindnandreplace}>
+            <template if:true={showsuccess}>
+                <div style="text-align: center;font-size: 20px;margin: 20px;">
+                    <lightning-icon size="small" icon-name="action:approval" variant="inverse" alternative-text="Success" title="Success" ></lightning-icon>
+                    <h2>Replacement Done.</h2>
+                </div>
+            </template>
+            <template if:false={showsuccess}>
+                <div class="slds-grid slds-wrap" style="margin: 20px;">
+                    <div class="slds-col slds-large-size_6-of-12 slds-medium-size_6-of-12 slds-size_6-of-12">
+                        <lightning-input label="Old Font Size (in px)" value={fontsizeold} type="number" onchange={handlefontsizechangeold}></lightning-input>
+                    </div>
+                    <div class="slds-col slds-large-size_6-of-12 slds-medium-size_6-of-12 slds-size_6-of-12" style="margin-left: 10px; width:47%">
+                        <lightning-input label="New Font Size (in px)" value={fontsize} type="number" onchange={handlefontsizechange}></lightning-input>
+                    </div>
+                </div>
+
+                <div class="slds-grid slds-wrap" style="margin: 20px;">
+                    <div class="slds-col slds-large-size_6-of-12 slds-medium-size_6-of-12 slds-size_6-of-12">
+                        <lightning-input label="Old Font Style" value={fontstyleold} type="text" onchange={handlefontstylehangeold}></lightning-input>
+                    </div>
+                    <div class="slds-col slds-large-size_6-of-12 slds-medium-size_6-of-12 slds-size_6-of-12" style="margin-left: 10px; width:47%">
+                        <lightning-input label="New Font Style" value={fontstyle} type="text" onchange={handlefontstylehange}></lightning-input>
+                    </div>
+                </div>
+
+                <lightning-spinner if:true={showSpinner} alternative-text="Processing responses..."></lightning-spinner>
+                <footer class="slds-modal__footer">
+                    <!-- <lightning-button variant="neutral" value="Cancel" ></lightning-button> -->
+                    <template if:false={showMessage}>
+                        <lightning-button name="remove" label="Replace" variant="brand" onclick={handleReplaceClick}></lightning-button>
+                    </template>
+                </footer>
+            </template>
+        </template>
+    </lightning-card>
+</template>
