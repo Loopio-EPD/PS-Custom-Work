@@ -1,0 +1,28 @@
+<template>
+    <lightning-card>
+        <template if:true={showsuccess}>
+            <div style="text-align: center;font-size: 20px;margin: 20px;">
+                <lightning-icon size="small" icon-name="action:approval" variant="inverse" alternative-text="Success" title="Success" ></lightning-icon>
+                <h2>Chatter posted successfully.</h2>
+            </div>
+        </template>
+        <template if:false={showsuccess}>
+            <lightning-layout>
+                <lightning-layout-item padding="around-small">
+                    <lightning-input-rich-text value={commentbody} onchange={handleChange}>
+                    </lightning-input-rich-text>
+                </lightning-layout-item>
+            </lightning-layout>
+            <div style="margin: 20px;">    
+                <c-multi-select-combobox multiselect="true" onoptionschange={handleoptionschange} label="Select users to mention"></c-multi-select-combobox>
+            </div>
+            <lightning-spinner if:true={showSpinner} alternative-text="Processing responses..."></lightning-spinner>
+            <footer class="slds-modal__footer">
+                <!-- <lightning-button variant="neutral" value="Cancel" ></lightning-button> -->
+                <template if:false={showMessage}>
+                    <lightning-button disabled={disablePostButton} name="post" label="Post" variant="brand" onclick={handlePostClick}></lightning-button>
+                </template>
+            </footer>
+        </template>
+    </lightning-card>
+</template>
