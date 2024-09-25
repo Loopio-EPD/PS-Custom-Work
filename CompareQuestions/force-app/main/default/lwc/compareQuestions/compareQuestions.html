@@ -1,0 +1,150 @@
+<template>
+
+    <template if:true={showSpinner}>
+        <lightning-spinner alternative-text="Loading" size="medium" class="spinnerClass"></lightning-spinner>
+    </template>
+
+    <template if:false={showSpinner}>
+        <template if:true={showRelatedProject}>
+            <div class="slds-grid slds-wrap all-component" style="color: rgb(106, 106, 116);margin-bottom:15px;font-size:17px;">
+                <div class="slds-col slds-large-size_6-of-12 slds-medium-size_6-of-12 slds-size_6-of-12">
+                    <span><h2>Related Project : <lightning-formatted-url style="font-size:20px;color: rgb(0, 0, 0);font-weight: bold;" value={prevProjUrl} label={relatedProjectName} target="_blank" ></lightning-formatted-url> </h2></span>
+                    <span><h2 style="margin-top:10px;">Total Questions : {totalQuestions}</h2></span>
+                    <span><h2 style="margin-top:10px;">No. of Retrieved Questions : {retrievedQuestions}</h2></span>
+                </div>
+                <div class="slds-col slds-large-size_6-of-12 slds-medium-size_6-of-12 slds-size_6-of-12">
+                    <span><h2>No. of Related Questions : {questionsFound}</h2></span>
+                    <span><h2 style="margin-top:10px;">No. of Related Questions with Answers : {questionsHaveAnswers}</h2></span>
+                </div>
+            </div>    
+        </template>
+    
+        <div class="all-component">
+            <div if:true={showProductTable}>  
+                <div if:false={showRelatedProject}>
+                    <h2 style="margin-bottom:20px" class="slds-page-header__title slds-m-right_small slds-align-middle slds-truncate"  title="No related project found.">No related project found.</h2>
+                </div>
+
+
+                <div class="slds-grid slds-wrap all-component" style="color: rgb(106, 106, 116);font-size:17px;margin-bottom:10px;">
+                    <div class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-size_4-of-12">
+                        <label class="custom-label">Show only NSE</label>
+                        <lightning-input style="display: inline-block;vertical-align: middle;" data-id="NSEtoggle" type="toggle" checked={nsechecked} onchange={changeToggle} message-toggle-active="" message-toggle-inactive=""></lightning-input>
+                    </div>
+                    <div class="slds-col slds-large-size_3-of-12 slds-medium-size_3-of-12 slds-size_3-of-12">
+                    </div>
+                    <div class="slds-col slds-large-size_5-of-12 slds-medium-size_5-of-12 slds-size_5-of-12">
+                        <lightning-input style="font-size:15px;margin-top:-20px;" type="text" placeholder="Search here ..." onchange={handleSearch}></lightning-input>
+                    </div>
+                </div>    
+
+                <lightning-layout horizontal-align="left" multiple-rowsclass="slds-grid_align-end container">
+                    <lightning-layout-item size="12" class="row">
+                        <div class="slds-theme--default">
+                            <div style="height: calc(100vh - 410px);">
+                                <div class="slds-scrollable_y tableFixHead" >
+                                    <table class="slds-table--header-fixed slds-table slds-table_bordered">
+                                        <thead>
+                                            <tr style="height:40px;font-size:14px;" >
+                                                <th scope="col" style="width: 23%;">
+                                                    <div style="border-top: 1px solid black; border-bottom: 1px solid black; padding: 12px; padding-left: 40px;" title="Current Project Question">Current Project Question</div>
+                                                </th>
+                                                <th scope="col" style="width: 23%;">
+                                                    <div style="border-top: 1px solid black; border-bottom: 1px solid black; padding: 12px;" title="Current Project Answer">Current Project Answer</div>
+                                                </th>
+                                                <th scope="col" style="width: 23%;">
+                                                    <div style="border-top: 1px solid black; border-bottom: 1px solid black; padding: 12px;" title="Previous Project Question">Previous Project Question</div>
+                                                </th>
+                                                <th scope="col" style="width: 23%;">
+                                                    <div style="border-top: 1px solid black; border-bottom: 1px solid black; padding: 12px;" title="Previous Project Answer">Previous Project Answer</div>
+                                                </th>
+                                                <th scope="col" style="width: 8%;">
+                                                    <div style="border-top: 1px solid black; border-bottom: 1px solid black; padding: 12px;text-align: center;" title="Action">Action</div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <template for:each={itemsList} for:item="ptr">
+                                                <tr class="slds-hint-parent" key={ptr.currentQuestionId}>
+                                                    <td style="vertical-align:top;text-align:left;">
+                                                        <div class="slds-cell-wrap">
+                                                            <div class="slds-grid slds-wrap">
+                                                                <div class="slds-col slds-large-size_1-of-12 slds-medium-size_1-of-12 slds-size_1-of-12">
+                                                                    <lightning-icon id={ptr.currentQuestionId} icon-name="utility:new_window" size="xx-small" onclick={handleViewQuestion}></lightning-icon>
+                                                                </div>
+                                                                <div class="slds-col slds-large-size_11-of-12 slds-medium-size_11-of-12 slds-size_11-of-12">
+                                                                    <lightning-formatted-rich-text id={ptr.currentQuestionId} class="topText" type="text" value={ptr.currentQuestion} disabled="true"></lightning-formatted-rich-text>
+                                                                </div>
+                                                            </div>   
+                                                        </div>
+                                                    </td>
+                                                    <td style="vertical-align:top;text-align:left;">
+                                                        <div class="slds-cell-wrap">
+                                                            <lightning-formatted-rich-text id={ptr.currentQuestionId} class="topText" type="text" value={ptr.currentAnswer} disabled="true"></lightning-formatted-rich-text>
+                                                        </div>
+                                                    </td>
+                                                    <td style="vertical-align:top;text-align:left;">
+                                                        <div class="slds-cell-wrap">
+                                                            <lightning-formatted-rich-text id={ptr.currentQuestionId} class="topText" type="text" value={ptr.previousQuestion} disabled="true"></lightning-formatted-rich-text>
+                                                        </div>
+                                                    </td>
+                                                    <td style="vertical-align:top;text-align:left;">
+                                                        <div class="slds-cell-wrap">
+                                                            <lightning-formatted-rich-text id={ptr.currentQuestionId} class="topText" type="text" value={ptr.previousAnswer} disabled="true"></lightning-formatted-rich-text>
+                                                        </div>
+                                                    </td>
+                                                    <td style="vertical-align:center;text-align:center;">
+                                                        <div if:true={ptr.showButton}>
+                                                            <div if:true={ptr.sameAnswerPresent}>
+                                                                <button id={ptr.currentQuestionId} class="slds-button slds-button_brand button-class" onclick={handleRetrieveClick} disabled>Retrieve</button><br>
+                                                                <button id={ptr.currentQuestionId} style="margin-top: 10px;" class="slds-button slds-button_brand button-class" onclick={handleUndoClick} disabled>Undo</button>
+                                                            </div>
+                                                            <div if:false={ptr.sameAnswerPresent}>
+                                                                <div if:true={ptr.isChanged}>
+                                                                    <button id={ptr.currentQuestionId} class="slds-button slds-button_brand button-class" onclick={handleRetrieveClick} disabled>Retrieve</button><br>
+                                                                    <button id={ptr.currentQuestionId} style="margin-top: 10px;" class="slds-button slds-button_brand button-class" onclick={handleUndoClick}>Undo</button>
+                                                                </div>
+                                                                <div if:false={ptr.isChanged}>
+                                                                    <button id={ptr.currentQuestionId} class="slds-button slds-button_brand button-class" onclick={handleRetrieveClick}>Retrieve</button><br>
+                                                                    <button id={ptr.currentQuestionId} style="margin-top: 10px;" class="slds-button slds-button_brand button-class" onclick={handleUndoClick} disabled>Undo</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </template>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </lightning-layout-item>
+                </lightning-layout>
+                <div class="slds-grid slds-wrap all-component" style="margin-top: 10px;">
+                    <div class="slds-col slds-large-size_6-of-12 slds-medium-size_6-of-12 slds-size_6-of-12 pagination-records">
+                        Records Per Page <input class="number-input" type="number" value={recordsPerPage} min="5" max="100" onchange={changeRecordsPerPage}></input>
+                    </div>
+                    <div class="slds-col slds-large-size_6-of-12 slds-medium-size_6-of-12 slds-size_6-of-12 pagination-pages">
+                        Page <input class="number-input" type="number" value={currentPage} min="1" max={totalPages} onchange={changePage}></input> of {totalPages}
+                    </div>
+                </div>
+                <div if:true={showRelatedProject} style="text-align: center;margin-top:20px;">
+                    <template if:true={showRetrieveAllButton}>
+                        <button class="slds-button slds-button_brand" onclick={retrieveAllQuestions}>Retrieve All</button>
+                        <button class="slds-button slds-button_brand" onclick={undoAllQuestions}>Undo All</button>
+                    </template>
+                    <button class="slds-button slds-button_brand" onclick={saveQuestions}>Save Answers</button>
+                    <button class="slds-button slds-button_brand" onclick={cancelButtonClick}>Back</button>
+                </div>
+            </div>
+            <div if:false={showProductTable}>
+                <div if:false={showSpinner}>
+                    <h2 style="margin-bottom:20px" class="slds-page-header__title slds-m-right_small slds-align-middle slds-truncate"  title="No questions found in current project.">No questions found in current project.</h2>
+                </div>
+                <div style="text-align: center;margin-top:20px;">
+                    <button class="slds-button slds-button_brand button-class" onclick={cancelButtonClick}>Back</button>
+                </div>
+            </div>
+        </div>
+    </template>
+</template>

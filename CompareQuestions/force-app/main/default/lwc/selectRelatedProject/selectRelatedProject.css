@@ -1,0 +1,14 @@
+.all-component {
+    background-color: white;
+    padding: 10px;
+}
+.all-component .custom-label {
+    font-size: 17px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.button-class{
+    margin-top : 0px;
+    height: 30px;
+    width: 70px;
+}

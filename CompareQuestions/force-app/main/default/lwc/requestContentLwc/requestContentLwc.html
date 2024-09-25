@@ -1,0 +1,28 @@
+<template>
+
+    <lightning-card  title="Suggest / Request Content">
+        <template if:true={showSpinner}>
+            <lightning-spinner alternative-text="Loading" size="medium" class="spinnerClass"></lightning-spinner>
+        </template>
+        
+        <div class="all-component">
+            <span><h2 style="font-size:15px;">Question</h2></span>
+            <lightning-textarea name="input1" value={questionvalue} onchange={handleQuestionChange}></lightning-textarea>
+            
+            <span><h2 style="font-size:15px;margin-top: 20px;">Reason for request</h2></span>
+            <lightning-textarea name="input1" value={needvalue} onchange={handleNeedChange}></lightning-textarea>
+            
+            <span><h2 style="font-size:15px;margin-top: 20px;">Priority</h2></span>
+            <lightning-combobox
+                    name="priority"
+                    value={priorityvalue}
+                    placeholder="Select Priority"
+                    options={priorityoptions}
+                    onchange={handlePriorityChange} ></lightning-combobox>
+            
+            <div style="text-align: center;margin-top:20px;">
+                <button class="slds-button slds-button_brand" onclick={saveRequest}>Save Request</button>
+            </div>
+        </div>
+    </lightning-card>
+</template>

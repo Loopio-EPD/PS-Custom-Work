@@ -1,0 +1,13 @@
+.all-component {
+    background-color: white;
+    padding: 20px;
+}
+.button-class{
+    margin-top : 0px;
+    height: 30px;
+    width: 70px;
+}
+.spinnerClass{
+    position: fixed;
+    z-index: 9002 !important;
+}

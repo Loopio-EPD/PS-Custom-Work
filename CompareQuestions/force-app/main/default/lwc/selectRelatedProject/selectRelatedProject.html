@@ -1,0 +1,25 @@
+<template>
+    <div class="all-component" style="margin-top: 10px">
+        <span><h2 style="font-size:20px;text-align:center;">Please select the Related Project</h2></span>
+
+        <p style="margin-top: 30px; margin-left: 20px;">If you want to search projects specific to account, then select account first and then project; otherwise you can search projects directly.</p>
+        <div class="slds-grid slds-wrap all-component" style="color: rgb(106, 106, 116);margin-bottom:15px;font-size:17px;margin-top: 10px;">
+            <div style="padding:10px;" class="slds-col slds-large-size_6-of-12 slds-medium-size_6-of-12 slds-size_6-of-12">
+                <span><h2 style="font-size:15px;">Select the Account</h2></span>
+                <div style="margin-top:10px;">
+                    <c-custom-lookup-lwc isprojectselected=false s-object-api-name="account" icon-name="standard:account" label="Select Account" onlookupupdate={lookupAccountRecord} placeholder="Search..."></c-custom-lookup-lwc>  
+                </div>
+            </div>
+            <div style="padding:10px;" class="slds-col slds-large-size_6-of-12 slds-medium-size_6-of-12 slds-size_6-of-12">
+                <span><h2 style="font-size:15px;">Select the Project</h2></span>
+                <div style="margin-top:10px;">
+                    <c-custom-lookup-lwc data-id="projectlookup" selectedaccountid ={selectedAccountId} currentprojectid={recordId} isprojectselected=true s-object-api-name="avnio__project__c" icon-name="standard:custom_notification" label="Select Related Project" onlookupupdate={lookupRecord} placeholder="Search..."></c-custom-lookup-lwc>      
+                </div>
+            </div>
+        </div>
+        <div style="text-align: center;margin-top:40px;">
+            <button class="slds-button slds-button_brand button-class" onclick={continueClick} disabled={disableContinueButton}>Compare</button>
+            <button class="slds-button slds-button_brand button-class" onclick={cancelButtonClick}>Back</button>
+        </div>
+    </div>
+</template>

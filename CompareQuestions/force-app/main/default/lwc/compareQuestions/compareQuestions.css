@@ -1,0 +1,59 @@
+.all-component {
+    background-color: white;
+    padding: 10px;
+}
+.all-component .custom-label {
+    font-size: 17px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.button-class{
+    margin-top : 0px;
+    height: 30px;
+    width: 70px;
+}
+.spinnerClass{
+    position: fixed;
+    z-index: 9002 !important;
+}
+.tableFixHead {
+    overflow: auto;
+    height: calc(100vh - 410px);
+    border-bottom: 1px solid #e5e5e5;
+}
+.tableFixHead table {
+    border-collapse: collapse;
+    width: 100%;
+}
+.tableFixHead th {
+    position: sticky;
+    top: 0;
+    z-index: 4;
+    background:#F3F3F3;
+}
+.topText {
+    --sds-c-textarea-sizing-min-height:80px;
+}
+table, th, td, tr,thead,tbody {
+    border: 1px groove black;
+    border-collapse: collapse;
+    text-align: left;
+}
+.pagination-pages {
+    text-align: right;
+}
+.pagination-records {
+    text-align: left;
+}
+.number-input {
+    width: 50px;
+    padding: 0px;
+    text-align: center;
+}
+table{ 
+    table-layout: fixed;
+    margin-top: -1px;
+}
+.slds-input__icon.iconpointerevetns{
+    pointer-events:all
+}
