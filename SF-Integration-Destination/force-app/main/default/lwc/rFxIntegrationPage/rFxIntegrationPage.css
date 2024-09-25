@@ -1,0 +1,17 @@
+.all-component {
+    background-color: white;
+    position: relative;
+    height: 437px;
+}
+.spinnerClass{
+    position: fixed;
+    z-index: 9002 !important;
+    height: 550px;
+}
+.label-class{
+    margin-top: -10px;
+    margin-bottom: 15px;
+}
+.button-class{
+    margin-top : 20px;
+}

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+	<types>
+		<members>RFX_Integration_Data_Delete_Log__c</members>
+		<name>CustomObject</name>
+	</types>
+	<types>
+		<members>RFX_Integration_Data_Delete_Log__c.Record_ID__c</members>
+		<members>RFX_Integration_Data_Delete_Log__c.Object_API_Name__c</members>
+		<name>CustomField</name>
+	</types>
+	<types>
+		<members>RFX_Integration_Permission_Set</members>
+		<name>PermissionSet</name>
+	</types>
+	<types>
+		<members>ResponseTriggerForRFxInt</members>
+		<members>ResponseQuestionTriggerForRFxInt</members>
+		<members>AlternativeAnswerTriggerForRFxInt</members>
+		<members>ResponseCategoryTriggerForRFxInt</members>
+		<members>ResponseTagTriggerForRFxInt</members>
+		<name>ApexTrigger</name>
+	</types>
+	<types>
+		<members>RFxIntegrationTriggerController</members>
+		<members>RFxIntegrationTriggerControllerTest</members>
+		<members>RFxIntegrationService</members>
+		<members>RFxIntegrationServiceTest</members>
+		<name>ApexClass</name>
+	</types>
+	<version>47.0</version>
+</Package>

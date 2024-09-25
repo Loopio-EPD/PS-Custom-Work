@@ -1,0 +1,14 @@
+<template>
+
+    <template if:true={showSpinner}>
+        <div class="all-component">
+            <div class="center-elements">
+                <lightning-spinner class="spinner-class" alternative-text="Loading" size="medium"></lightning-spinner>
+            </div>
+        </div>
+    </template>
+
+    <template if:false={showSpinner}>
+        <button class="slds-button slds-button_brand button-class margin-right-class" onclick={runBatch}>Run Batch</button>
+    </template>
+</template>
